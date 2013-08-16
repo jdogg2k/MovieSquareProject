@@ -1,6 +1,5 @@
 package com.jorose.moviesquare;
 
-import android.R;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -75,7 +74,7 @@ public class FoursquareDialog extends Dialog {
     private void setUpTitle() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Drawable icon = getContext().getResources().getDrawable(
-                R.drawable.button_onoff_indicator_on
+                R.drawable.foursquare
         );
         mTitle = new TextView(getContext());
         mTitle.setText("Foursquare");
