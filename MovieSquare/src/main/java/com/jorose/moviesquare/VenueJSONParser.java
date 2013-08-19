@@ -51,13 +51,16 @@ public class VenueJSONParser {
         HashMap<String, String> venue = new HashMap<String, String>();
         String venueName = "";
         String venueLocation = "";
+        String venueCheckIns = "";
 
         try {
             venueName = jVenue.getString("name");
             venueLocation = jVenue.getJSONObject("location").getString("city") + ", " + jVenue.getJSONObject("location").getString("state");
+            venueCheckIns = jVenue.getJSONObject("hereNow").getString("count");
 
             venue.put("name", venueName);
             venue.put("location", venueLocation);
+            venue.put("checkIn", venueCheckIns);
 
         } catch (JSONException e) {
             e.printStackTrace();

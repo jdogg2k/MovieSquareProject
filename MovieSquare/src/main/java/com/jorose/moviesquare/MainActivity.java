@@ -198,10 +198,10 @@ public class MainActivity extends Activity {
                 }
 
                 /** Keys used in Hashmap */
-                String[] from = {"name","location"};
+                String[] from = {"name","location","checkIn"};
 
                 /** Ids of views in listview_layout */
-                int[] to = { R.id.venue_name,R.id.venue_location};
+                int[] to = { R.id.venue_name,R.id.venue_location,R.id.checkInCount};
 
                 /** Instantiating an adapter to store each items
                  *  R.layout.listview_layout defines the layout of each item
