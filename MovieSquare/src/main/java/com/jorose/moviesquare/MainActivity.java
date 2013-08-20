@@ -110,7 +110,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(String Result){
             try{
 
-                Toast.makeText(getApplicationContext(), "R E S U L T :"+jsonResult, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "R E S U L T :"+jsonResult, Toast.LENGTH_LONG).show();
                 System.out.println(jsonResult);
                 //showing result
 
@@ -229,6 +229,7 @@ public class MainActivity extends Activity {
 
         if (isAuthorized){
             childList = new GetChildList();
+            childList.execute();
         }
     }
 
