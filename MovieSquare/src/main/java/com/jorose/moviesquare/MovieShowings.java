@@ -182,7 +182,10 @@ public class MovieShowings extends Activity {
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         HashMap hm = (HashMap) listView.getItemAtPosition(position);
 
-                        /*String venID = hm.get("id").toString();
+                        /*
+                        TODO - CheckIn User
+
+                        String venID = hm.get("id").toString();
                         selVenueID = venID;
                         showMovies(listView);*/
 
