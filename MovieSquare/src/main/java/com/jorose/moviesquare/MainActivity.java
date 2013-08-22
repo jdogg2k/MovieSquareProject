@@ -3,6 +3,7 @@ package com.jorose.moviesquare;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -41,12 +44,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends Activity {
 
+    public final static String SELECTED_VENUE_ID = "com.jorose.moviesquare.VENUE_ID";
+    public final static String SELECTED_VENUE_NAME = "com.jorose.moviesquare.VENUE_NAME";
     String jsonResult;
     GetChildList childList;
+    String selVenueID;
+    String selVenueName;
 
     private static final int REQUEST_CODE_FSQ_CONNECT = 200;
     private static final int REQUEST_CODE_FSQ_TOKEN_EXCHANGE = 201;
@@ -55,8 +63,8 @@ public class MainActivity extends Activity {
      * Obtain your client id and secret from:
      * https://foursquare.com/developers/apps
      */
-    private static final String CLIENT_ID = "ZAJDKMJ13CTC25VCZFYTMQCV3YMMZXSQFUZIOEMUOVVRFQGG";
-    private static final String CLIENT_SECRET = "43T3FFM5KWHRXUP1M0BJVUV3ZJNAIYC2WVECDUJJJRHAG2EZ";
+    public static final String CLIENT_ID = "ZAJDKMJ13CTC25VCZFYTMQCV3YMMZXSQFUZIOEMUOVVRFQGG";
+    public static final String CLIENT_SECRET = "43T3FFM5KWHRXUP1M0BJVUV3ZJNAIYC2WVECDUJJJRHAG2EZ";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +73,9 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ensureUi();
+        //ensureUi();
+        childList = new GetChildList();
+        childList.execute();
     }
 
     private class GetChildList extends AsyncTask<String, Void, String>{
@@ -182,17 +192,39 @@ public class MainActivity extends Activity {
             protected void onPostExecute(SimpleAdapter adapter) {
 
                 /** Getting a reference to listview of main.xml layout file */
-                ListView listView = (ListView) findViewById(R.id.venueList);
+                final ListView listView = (ListView) findViewById(R.id.venueList);
 
                 listView.setBackgroundColor(Color.rgb(223, 223, 224));
 
                 /** Setting the adapter containing the country list to listview */
                 listView.setAdapter(adapter);
+
+                listView.setClickable(true);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                        HashMap hm = (HashMap) listView.getItemAtPosition(position);
+
+                        selVenueID = hm.get("id").toString();
+                        selVenueName = hm.get("name").toString();
+                        showMovies(listView);
+
+                    }
+                });
+
             }
         }
 
     }
 
+    /** Called when the user clicks the Send button */
+    public void showMovies(View view) {
+        Intent intent = new Intent(this, MovieShowings.class);
+        intent.putExtra(SELECTED_VENUE_ID, selVenueID);
+        intent.putExtra(SELECTED_VENUE_NAME, selVenueName);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -228,8 +260,8 @@ public class MainActivity extends Activity {
         });
 
         if (isAuthorized){
-            childList = new GetChildList();
-            childList.execute();
+            //childList = new GetChildList();
+            //childList.execute();
         }
     }
 

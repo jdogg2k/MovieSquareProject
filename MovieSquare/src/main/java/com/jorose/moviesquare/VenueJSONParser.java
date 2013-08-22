@@ -52,8 +52,10 @@ public class VenueJSONParser {
         String venueName = "";
         String venueLocation = "";
         String venueCheckIns = "";
+        String venueID = "";
 
         try {
+            venueID = jVenue.getString("id");
             venueName = jVenue.getString("name");
             venueLocation = jVenue.getJSONObject("location").getString("city") + ", " + jVenue.getJSONObject("location").getString("state");
             venueCheckIns = jVenue.getJSONObject("hereNow").getString("count");
@@ -61,6 +63,7 @@ public class VenueJSONParser {
             venue.put("name", venueName);
             venue.put("location", venueLocation);
             venue.put("checkIn", venueCheckIns);
+            venue.put("id", venueID);
 
         } catch (JSONException e) {
             e.printStackTrace();

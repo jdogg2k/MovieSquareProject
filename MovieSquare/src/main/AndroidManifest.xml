@@ -25,6 +25,14 @@
         <activity
                 android:name="com.foursquare.android.nativeoauth.TokenExchangeActivity"
                 android:theme="@android:style/Theme.Dialog" />
+        <activity
+                android:name="com.jorose.moviesquare.MovieShowings"
+                android:label="@string/movie_showings_activity_title"
+                android:parentActivityName="com.jorose.moviesquare.MainActivity" >
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.jorose.moviesquare.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

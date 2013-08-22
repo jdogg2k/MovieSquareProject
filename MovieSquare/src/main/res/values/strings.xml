@@ -6,4 +6,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">Main</string>
     <string name="app_not_installed_message">To do this, you’ll need the latest version of Foursquare installed.</string>
+    <string name="movie_showings_activity_title">Movies Playing</string>
 </resources>
