@@ -5,6 +5,7 @@
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/MovieSquare/src/main/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/MovieSquare/build/manifests/debug/gen" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/../foursquare-android-oauth/foursquare-oauth-library/gen" includeSubdirectories="true" />
     </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>

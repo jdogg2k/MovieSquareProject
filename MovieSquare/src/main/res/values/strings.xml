@@ -7,4 +7,8 @@
     <string name="title_activity_main">Main</string>
     <string name="app_not_installed_message">To do this, you’ll need the latest version of Foursquare installed.</string>
     <string name="movie_showings_activity_title">Movies Playing</string>
+    <color name="colorPopUp">#BB000000</color>
+    <color name="colorPopUpWindow">#000000</color>
+    <color name="colorPopUpMarcoWindow">#FFFFFF</color>
+    <string name="closebutton">Close [x]</string>
 </resources>
