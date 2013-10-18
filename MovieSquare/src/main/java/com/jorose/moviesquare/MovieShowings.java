@@ -2,6 +2,8 @@ package com.jorose.moviesquare;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -23,11 +25,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
@@ -182,9 +188,31 @@ public class MovieShowings extends Activity {
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         HashMap hm = (HashMap) listView.getItemAtPosition(position);
 
-                        /*String venID = hm.get("id").toString();
-                        selVenueID = venID;
-                        showMovies(listView);*/
+                        String movieURL = hm.get("url").toString();
+//https://foursquare.com/events/movies?theater=AAORE&movie=162426&wired=true
+                        int mPos = movieURL.indexOf("movie=") + 6;
+                        int mEnd = movieURL.indexOf("&wired=");
+                        String movieID = movieURL.substring(mPos, mEnd);
+
+                        try{ //use fandango to get poster Image
+                            Document doc = Jsoup.connect("http://www.fandango.com/movies/1/movieoverview.aspx?mid=" + movieID).get();
+
+                            Element posterElement = doc.getElementById("POSTER_LINK");
+                            Element posterImage = posterElement.children().first();
+                            String imageURL = posterImage.attr("src");
+
+                            //todo show image to user
+                            URL url = new URL(imageURL);
+                            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                            //imageView.setImageBitmap(bmp);
+
+
+                        }catch(Exception e){
+                            Log.d("Exception",e.toString());
+                        }
+
+
+
 
                     }
                 });

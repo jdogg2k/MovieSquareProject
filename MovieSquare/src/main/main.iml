@@ -15,6 +15,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gradle-wrapper" level="project" />
     <orderEntry type="module" module-name="foursquare-oauth-library" />
+    <orderEntry type="library" name="jsoup-1.7.2" level="project" />
   </component>
 </module>
 

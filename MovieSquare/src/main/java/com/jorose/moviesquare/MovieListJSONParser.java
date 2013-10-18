@@ -51,19 +51,17 @@ public class MovieListJSONParser {
         HashMap<String, String> movie = new HashMap<String, String>();
         String movieName;
         String movieID;
-        String moviePoster;
+        String movieURL;
 
         try {
             movieID = jVenue.getString("id");
             movieName = jVenue.getString("name");
-           // moviePoster = getPoster(movieName);
+            movieURL = jVenue.getString("url");
 
 
             movie.put("name", movieName);
             movie.put("id", movieID);
-
-
-            //movie.put("poster", moviePoster);
+            movie.put("url", movieURL);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -71,16 +69,4 @@ public class MovieListJSONParser {
         return movie;
     }
 
-    private String getPoster(String movieName){
-        String thisPoster = "https://d3gtl9l2a4fn1j.cloudfront.net/t/p/w92/4jJlcCC2BemPBLyezOLcumGvI8Q.jpg";
-
-
-        /**parse the movie poster here
-         * http://api.themoviedb.org/3/search/movie?api_key=8fea41d96d364362ed79192060a7f8f8&query=Grown%20Ups%202
-         * */
-
-
-
-        return thisPoster;
-    }
 }
