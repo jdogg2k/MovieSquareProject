@@ -1,18 +1,27 @@
 package com.jorose.moviesquare;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -189,7 +198,8 @@ public class MovieShowings extends Activity {
                         HashMap hm = (HashMap) listView.getItemAtPosition(position);
 
                         String movieURL = hm.get("url").toString();
-//https://foursquare.com/events/movies?theater=AAORE&movie=162426&wired=true
+                        String movieName = hm.get("name").toString();
+
                         int mPos = movieURL.indexOf("movie=") + 6;
                         int mEnd = movieURL.indexOf("&wired=");
                         String movieID = movieURL.substring(mPos, mEnd);
@@ -198,14 +208,56 @@ public class MovieShowings extends Activity {
                             Document doc = Jsoup.connect("http://www.fandango.com/movies/1/movieoverview.aspx?mid=" + movieID).get();
 
                             Element posterElement = doc.getElementById("POSTER_LINK");
+                            String allSource = doc.html();
+                            int topH = allSource.indexOf("<h1");
+                            String subSource = allSource.substring(topH);
+                            int topSpan = subSource.indexOf("<span") + 1;
+                            String spanSource = subSource.substring(topSpan);
+                            int markStart = spanSource.indexOf(">") + 1;
+                            int markEnd = spanSource.indexOf("<");
+                            String movieInfo = spanSource.substring(markStart, markEnd);
+
                             Element posterImage = posterElement.children().first();
                             String imageURL = posterImage.attr("src");
 
+
+                            int popupWidth = 610;
+                            int popupHeight = 800;
+
+
+                            LinearLayout viewGroup = (LinearLayout) findViewById(R.id.popupLinearLayout);
+                            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            View layout = layoutInflater.inflate(R.layout.activity_movie_info, viewGroup);
                             //todo show image to user
                             URL url = new URL(imageURL);
                             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                            //imageView.setImageBitmap(bmp);
+                            ImageView image = (ImageView) layout.findViewById(R.id.posterImage);
+                            image.setImageBitmap(bmp);
 
+                            TextView mName = (TextView) layout.findViewById(R.id.selMovieName);
+                            mName.setText(movieName);
+
+                            TextView mInfo = (TextView) layout.findViewById(R.id.selMovieInfo);
+                            mInfo.setText(movieInfo);
+
+                            // Creating the PopupWindow
+                            final PopupWindow popup = new PopupWindow();
+                            popup.setContentView(layout);
+                            popup.setWidth(popupWidth);
+                            popup.setHeight(popupHeight);
+                            popup.setFocusable(true);
+
+                            // Displaying the popup at the specified location, + offsets.
+                            popup.showAtLocation(layout, Gravity.NO_GRAVITY, 55, 200);
+
+                            Button close = (Button) layout.findViewById(R.id.close);
+                            close.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    popup.dismiss();
+                                }
+                            });
 
                         }catch(Exception e){
                             Log.d("Exception",e.toString());

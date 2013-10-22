@@ -22,6 +22,13 @@
             android:layout_marginRight="5dp"
             android:background="@color/colorPopUpMarcoWindow"
             android:text="@string/closebutton" />
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPopUpMarcoWindow"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,24 +36,68 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:background="@color/colorPopUpWindow"
+            android:background="@color/colorPopUpMarcoWindow"
             android:gravity="center"
             android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Movie Details"
-                android:textColor="@color/colorPopUpMarcoWindow" />
 
             <TextView
                 android:id="@+id/selMovieName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/colorPopUpMarcoWindow" />
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPopUp" />
+            <TextView
+                    android:id="@+id/selMovieInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="8dp"
+                    android:textColor="@color/colorPopUp" />
+            <ImageView
+                    android:id="@+id/posterImage"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
         </LinearLayout>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/colorPopUpMarcoWindow"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+            <Button
+                    android:id="@+id/checkInButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/foursquare_button"/>
+                <TextView
+                        android:id="@+id/checkInText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Check-In"
+                        android:textColor="@color/colorPopUp" />
+                </LinearLayout>
+        </LinearLayout>
+        <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="How was the film?"
+                android:textColor="@color/colorPopUp" />
+        <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:rating="1.0" />
     </LinearLayout>
 
 </LinearLayout>

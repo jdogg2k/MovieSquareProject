@@ -237,7 +237,7 @@ public class MainActivity extends Activity {
     private void ensureUi() {
         boolean isAuthorized = !TextUtils.isEmpty(ExampleTokenStore.get().getToken());
 
-        TextView tvTitle = (TextView) findViewById(R.id.viewTitle);
+        /*TextView tvTitle = (TextView) findViewById(R.id.viewTitle);
         tvTitle.setVisibility(isAuthorized ? View.VISIBLE : View.GONE);
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -258,7 +258,7 @@ public class MainActivity extends Activity {
                     startActivityForResult(intent, REQUEST_CODE_FSQ_CONNECT);
                 }
             }
-        });
+        });*/
 
         if (isAuthorized){
             //childList = new GetChildList();
