@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //ensureUi();
+        ensureUi();
         childList = new GetChildList();
         childList.execute();
     }
@@ -237,32 +237,18 @@ public class MainActivity extends Activity {
     private void ensureUi() {
         boolean isAuthorized = !TextUtils.isEmpty(ExampleTokenStore.get().getToken());
 
-        /*TextView tvTitle = (TextView) findViewById(R.id.viewTitle);
-        tvTitle.setVisibility(isAuthorized ? View.VISIBLE : View.GONE);
+        if (!isAuthorized){
+            Intent intent = FoursquareOAuth.getConnectIntent(MainActivity.this, CLIENT_ID);
 
-        Button btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLogin.setVisibility(isAuthorized ? View.GONE : View.VISIBLE);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Start the native auth flow.
-                Intent intent = FoursquareOAuth.getConnectIntent(MainActivity.this, CLIENT_ID);
-
-                // If the device does not have the Foursquare app installed, we'd
-                // get an intent back that would open the Play Store for download.
-                // Otherwise we start the auth flow.
-                if (FoursquareOAuth.isPlayStoreIntent(intent)) {
-                    toastMessage(MainActivity.this, getString(R.string.app_not_installed_message));
-                    startActivity(intent);
-                } else {
-                    startActivityForResult(intent, REQUEST_CODE_FSQ_CONNECT);
-                }
+            // If the device does not have the Foursquare app installed, we'd
+            // get an intent back that would open the Play Store for download.
+            // Otherwise we start the auth flow.
+            if (FoursquareOAuth.isPlayStoreIntent(intent)) {
+                toastMessage(MainActivity.this, getString(R.string.app_not_installed_message));
+                startActivity(intent);
+            } else {
+                startActivityForResult(intent, REQUEST_CODE_FSQ_CONNECT);
             }
-        });*/
-
-        if (isAuthorized){
-            //childList = new GetChildList();
-            //childList.execute();
         }
     }
 
