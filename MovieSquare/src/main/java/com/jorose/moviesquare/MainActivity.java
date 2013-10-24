@@ -5,9 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.os.Vibrator;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -81,18 +85,24 @@ public class MainActivity extends Activity {
 
     private class GetChildList extends AsyncTask<String, Void, String>{
 
-        private String strm = "38.87,-77.23";
         private String currentDateandTime = "20130715";  //yyyymmdd
 
         @Override
         protected String doInBackground(String... params) {
             // TODO Auto-generated method stub
+
+            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+            String latLong = Double.toString(latitude) + "," + Double.toString(longitude);
+
             DefaultHttpClient httpclient = new DefaultHttpClient();
             final HttpParams httpParams = httpclient.getParams();
             HttpConnectionParams.setConnectionTimeout(httpParams, 30000);
             HttpConnectionParams.setSoTimeout(httpParams, 30000);
 
-            HttpGet httppost = new HttpGet("https://api.foursquare.com/v2/venues/search?intent=checkin&ll="+strm+"&client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&v="+currentDateandTime+"&categoryId=4bf58dd8d48988d17f941735&limit=20"); //
+            HttpGet httppost = new HttpGet("https://api.foursquare.com/v2/venues/search?intent=checkin&ll="+latLong+"&client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&v="+currentDateandTime+"&categoryId=4bf58dd8d48988d17f941735&limit=20"); //
 
             try{
 
@@ -221,9 +231,11 @@ public class MainActivity extends Activity {
 
     /** Called when the user clicks the Send button */
     public void showMovies(View view) {
+        Global global = ((Global)getApplicationContext());
         Intent intent = new Intent(this, MovieShowings.class);
         intent.putExtra(SELECTED_VENUE_ID, selVenueID);
         intent.putExtra(SELECTED_VENUE_NAME, selVenueName);
+        global.set_venue(selVenueID);
         startActivity(intent);
     }
 

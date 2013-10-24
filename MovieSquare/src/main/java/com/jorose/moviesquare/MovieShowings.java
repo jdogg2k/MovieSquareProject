@@ -27,10 +27,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
@@ -43,8 +48,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 
 /**
  * Created by jordanrose on 8/21/13.
@@ -58,6 +65,7 @@ public class MovieShowings extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         // Get the message from the intent
         Intent intent = getIntent();
@@ -197,42 +205,52 @@ public class MovieShowings extends Activity {
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         HashMap hm = (HashMap) listView.getItemAtPosition(position);
 
+                        Global global = ((Global)getApplicationContext());
+
                         String movieURL = hm.get("url").toString();
                         String movieName = hm.get("name").toString();
+                        String movieInfo = "";
+                        String eventID = hm.get("id").toString();
+
+                        global.set_event(eventID);
 
                         int mPos = movieURL.indexOf("movie=") + 6;
                         int mEnd = movieURL.indexOf("&wired=");
                         String movieID = movieURL.substring(mPos, mEnd);
 
                         try{ //use fandango to get poster Image
-                            Document doc = Jsoup.connect("http://www.fandango.com/movies/1/movieoverview.aspx?mid=" + movieID).get();
-
-                            Element posterElement = doc.getElementById("POSTER_LINK");
-                            String allSource = doc.html();
-                            int topH = allSource.indexOf("<h1");
-                            String subSource = allSource.substring(topH);
-                            int topSpan = subSource.indexOf("<span") + 1;
-                            String spanSource = subSource.substring(topSpan);
-                            int markStart = spanSource.indexOf(">") + 1;
-                            int markEnd = spanSource.indexOf("<");
-                            String movieInfo = spanSource.substring(markStart, markEnd);
-
-                            Element posterImage = posterElement.children().first();
-                            String imageURL = posterImage.attr("src");
-
-
-                            int popupWidth = 610;
-                            int popupHeight = 800;
-
 
                             LinearLayout viewGroup = (LinearLayout) findViewById(R.id.popupLinearLayout);
                             LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                             View layout = layoutInflater.inflate(R.layout.activity_movie_info, viewGroup);
-                            //todo show image to user
-                            URL url = new URL(imageURL);
-                            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                            ImageView image = (ImageView) layout.findViewById(R.id.posterImage);
-                            image.setImageBitmap(bmp);
+
+                            int popupWidth = 610;
+                            int popupHeight = 800;
+
+                            Document doc = Jsoup.connect("http://www.fandango.com/movies/1/movieoverview.aspx?mid=" + movieID).get();
+
+                            Element posterElement = doc.getElementById("POSTER_LINK");
+
+                            if (posterElement != null){
+                                String allSource = doc.html();
+                                int topH = allSource.indexOf("<h1");
+                                String subSource = allSource.substring(topH);
+                                int topSpan = subSource.indexOf("<span") + 1;
+                                String spanSource = subSource.substring(topSpan);
+                                int markStart = spanSource.indexOf(">") + 1;
+                                int markEnd = spanSource.indexOf("<");
+                                movieInfo = spanSource.substring(markStart, markEnd);
+
+                                Element posterImage = posterElement.children().first();
+                                String imageURL = posterImage.attr("src");
+
+                                //todo show image to user
+                                URL url = new URL(imageURL);
+                                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                ImageView image = (ImageView) layout.findViewById(R.id.posterImage);
+                                image.setImageBitmap(bmp);
+
+                            }
 
                             TextView mName = (TextView) layout.findViewById(R.id.selMovieName);
                             mName.setText(movieName);
@@ -256,6 +274,39 @@ public class MovieShowings extends Activity {
                                 @Override
                                 public void onClick(View v) {
                                     popup.dismiss();
+
+                                }
+                            });
+
+                            Button fsqCheckIn = (Button) layout.findViewById(R.id.checkInButton);
+                            fsqCheckIn.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    String auth_token = ExampleTokenStore.get().getToken();
+                                    // Create a new HttpClient and Post Header
+                                    HttpClient httpclient = new DefaultHttpClient();
+                                    HttpPost httppost = new HttpPost("https://api.foursquare.com/v2/checkins/add");
+
+                                    try {
+
+                                        Global global = ((Global)getApplicationContext());
+
+                                        // Add your data
+                                        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                                        nameValuePairs.add(new BasicNameValuePair("oauth_token", auth_token));
+                                        nameValuePairs.add(new BasicNameValuePair("venueId", global.get_venue()));
+                                        nameValuePairs.add(new BasicNameValuePair("eventId", global.get_event()));
+                                        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                                        // Execute HTTP Post Request
+                                        HttpResponse response = httpclient.execute(httppost);
+
+                                    } catch (ClientProtocolException e) {
+                                        // TODO Auto-generated catch block
+                                    } catch (IOException e) {
+                                        // TODO Auto-generated catch block
+                                    }
                                 }
                             });
 
