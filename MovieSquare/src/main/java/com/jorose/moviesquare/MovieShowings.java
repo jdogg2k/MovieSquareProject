@@ -38,6 +38,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -61,6 +64,8 @@ public class MovieShowings extends Activity {
     String selVenue;
     String jsonResult;
     GetMovieShowings movieList;
+    LinearLayout checkSpan;
+    LinearLayout confirmSpan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,9 +269,13 @@ public class MovieShowings extends Activity {
                             popup.setWidth(popupWidth);
                             popup.setHeight(popupHeight);
                             popup.setFocusable(true);
+                            popup.setAnimationStyle(R.style.PopupWindowAnimation);
 
                             // Displaying the popup at the specified location, + offsets.
                             popup.showAtLocation(layout, Gravity.NO_GRAVITY, 55, 200);
+
+                            checkSpan = (LinearLayout) layout.findViewById(R.id.checkinSpan);
+                            confirmSpan = (LinearLayout) layout.findViewById(R.id.completeSpan);
 
                             Button close = (Button) layout.findViewById(R.id.close);
                             close.setOnClickListener(new View.OnClickListener() {
@@ -302,10 +311,36 @@ public class MovieShowings extends Activity {
                                         // Execute HTTP Post Request
                                         HttpResponse response = httpclient.execute(httppost);
 
+                                        String responseBody = EntityUtils.toString(response.getEntity());
+
+                                        if (responseBody != null && responseBody != ""){
+                                            checkSpan.setVisibility(View.GONE);
+                                            confirmSpan.setVisibility(View.VISIBLE);
+
+                                            String respMessage = "test";
+
+                                            JSONObject  checkResp = new JSONObject(responseBody);
+                                            JSONArray notifications = checkResp.getJSONArray("notifications");
+
+                                            //todo make message work
+                                            for(int i = 0 ; i < notifications.length(); i++){
+                                               JSONObject jo = notifications.getJSONObject(i);
+                                                String type = jo.getString("type");
+                                                if (i == 1){
+                                                    respMessage = jo.getJSONObject("item").getString("message");
+                                                }
+                                            }
+
+                                            TextView tv = (TextView) confirmSpan.findViewById(R.id.respMessage);
+                                            tv.setText(respMessage);
+                                        }
+
                                     } catch (ClientProtocolException e) {
                                         // TODO Auto-generated catch block
                                     } catch (IOException e) {
                                         // TODO Auto-generated catch block
+                                    } catch (JSONException e) {
+                                    // TODO Auto-generated catch block
                                     }
                                 }
                             });

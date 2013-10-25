@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-            // TODO Auto-generated method stub
+            // TODO Check for location via GPS OR WIFI
 
             LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);

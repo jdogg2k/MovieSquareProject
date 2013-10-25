@@ -3,7 +3,6 @@
     android:id="@+id/popupLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPopUp"
     android:gravity="center"
     android:orientation="vertical" >
 
@@ -22,6 +21,17 @@
             android:layout_marginRight="5dp"
             android:background="@color/colorPopUpMarcoWindow"
             android:text="@string/closebutton" />
+        <LinearLayout
+                android:id="@+id/checkinSpan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPopUpMarcoWindow"
+                android:gravity="center"
+                android:orientation="vertical">
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,6 +108,39 @@
                 android:numStars="5"
                 android:stepSize="0.5"
                 android:rating="1.0" />
+            </LinearLayout>
+        <LinearLayout
+                android:id="@+id/completeSpan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPopUpMarcoWindow"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="invisible">
+            <ImageView
+                    android:id="@+id/completeImage"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/checkcomplete" />
+            <TextView
+                android:id="@+id/respMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/blue" />
+            <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Enjoy the Movie!"
+                    android:textColor="@color/colorPopUp" />
+                </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
