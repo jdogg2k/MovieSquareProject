@@ -15,11 +15,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f006cf84-06c8-4c6a-9a25-9bd92b0b38bd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/checkin_confirm_layout.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MainActivity.java" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MovieShowings.java" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MovieShowings.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/activity_movie_info.xml" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/activity_movie_info.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/movie_lv_layout.xml" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/movie_lv_layout.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MovieSquareProject.iws" />
@@ -604,7 +599,7 @@
       <workItem from="1382557422859" duration="2056000" />
       <workItem from="1382724918789" duration="8759000" />
       <workItem from="1383059200288" duration="1311000" />
-      <workItem from="1383072236844" duration="5448000" />
+      <workItem from="1383072236844" duration="5472000" />
     </task>
     <task id="LOCAL-00001" summary="Added some improvements">
       <created>1376685501272</created>
@@ -630,23 +625,27 @@
       <created>1382735420009</created>
       <updated>1382735420009</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="checkinresults">
+      <created>1383077956783</created>
+      <updated>1383077956783</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39210000" />
+    <option name="totallyTimeSpent" value="39234000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33013844" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32943678" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.6025505" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39744952" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39744952" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -657,7 +656,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.6705632" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.6025505" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.6705632" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -680,7 +679,8 @@
     <MESSAGE value="added popup with fandango content" />
     <MESSAGE value="new images" />
     <MESSAGE value="processing response from checkin" />
-    <option name="LAST_COMMIT_MESSAGE" value="processing response from checkin" />
+    <MESSAGE value="checkinresults" />
+    <option name="LAST_COMMIT_MESSAGE" value="checkinresults" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
