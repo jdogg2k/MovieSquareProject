@@ -13,5 +13,5 @@
             android:textSize="14dp"
             android:textStyle="bold"
             android:padding="8dp"/>
-
+    <ImageView android:id="@+id/SpacerView" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"></ImageView>
 </LinearLayout>

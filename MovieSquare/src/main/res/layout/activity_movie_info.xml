@@ -7,7 +7,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPopUpMarcoWindow"
         android:gravity="center"
@@ -111,7 +111,7 @@
             </LinearLayout>
         <LinearLayout
                 android:id="@+id/completeSpan"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
@@ -133,6 +133,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/blue" />
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/scoreList"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                <TextView
+                        android:id="@+id/scoreTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="Score for this Checkin"
+                        android:textColor="@color/colorPopUp" />
+                </LinearLayout>
             <TextView
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"

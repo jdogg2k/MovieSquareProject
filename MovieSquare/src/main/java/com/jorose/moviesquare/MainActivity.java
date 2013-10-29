@@ -3,6 +3,7 @@ package com.jorose.moviesquare;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.location.Location;
@@ -247,6 +248,14 @@ public class MainActivity extends Activity {
     }
 
     private void ensureUi() {
+
+        SharedPreferences settings = getPreferences(MODE_PRIVATE);
+        String tToken = settings.getString("4sqToken", "none");
+
+        if (tToken != "none") {
+            ExampleTokenStore.get().setToken(tToken);
+        }
+
         boolean isAuthorized = !TextUtils.isEmpty(ExampleTokenStore.get().getToken());
 
         if (!isAuthorized){
@@ -261,6 +270,10 @@ public class MainActivity extends Activity {
             } else {
                 startActivityForResult(intent, REQUEST_CODE_FSQ_CONNECT);
             }
+        } else {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("4sqToken", ExampleTokenStore.get().getToken().toString());
+            editor.commit();
         }
     }
 

@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -322,12 +323,38 @@ public class MovieShowings extends Activity {
                                             JSONObject  checkResp = new JSONObject(responseBody);
                                             JSONArray notifications = checkResp.getJSONArray("notifications");
 
+                                            LinearLayout score_view = (LinearLayout) confirmSpan.findViewById(R.id.scoreList);
+
                                             //todo make message work
                                             for(int i = 0 ; i < notifications.length(); i++){
                                                JSONObject jo = notifications.getJSONObject(i);
-                                                String type = jo.getString("type");
-                                                if (i == 1){
+                                                String mType = jo.getString("type");
+                                                if (mType.equals("message")){
                                                     respMessage = jo.getJSONObject("item").getString("message");
+                                                }
+                                                if (mType.equals("score")){
+                                                    JSONArray scoreArray = jo.getJSONObject("item").getJSONArray("scores");
+                                                    for(int j = 0 ; j < scoreArray.length(); j++){
+                                                        JSONObject scoreObj = scoreArray.getJSONObject(j);
+                                                        String scoreMsg = scoreObj.getString("message");
+                                                        String scorePoints = scoreObj.getString("points");
+                                                        String scoreIcon = scoreObj.getString("icon");
+
+                                                        LinearLayout scoreRow = new LinearLayout(v.getContext());
+                                                        scoreRow.setOrientation(LinearLayout.HORIZONTAL);
+
+                                                        TextView scoreMessage = new TextView(v.getContext());
+                                                        scoreMessage.setText(scoreMsg);
+
+                                                        TextView scoreTally = new TextView(v.getContext());
+                                                        scoreTally.setText(scorePoints);
+
+                                                        scoreRow.addView(scoreMessage, 0);
+                                                        scoreRow.addView(scoreTally, 1);
+
+                                                        score_view.addView(scoreRow);
+
+                                                    }
                                                 }
                                             }
 
