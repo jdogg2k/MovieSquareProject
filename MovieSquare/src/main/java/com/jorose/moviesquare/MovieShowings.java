@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,8 +54,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import com.jorose.moviesquare.MovieHelper;
 
 
 /**
@@ -63,8 +67,11 @@ import java.util.List;
 public class MovieShowings extends Activity {
 
     String selVenue;
+    String selMovieName;
+    String selMovieFanID;
     String jsonResult;
     GetMovieShowings movieList;
+    MovieHelper mHelper;
     LinearLayout checkSpan;
     LinearLayout confirmSpan;
 
@@ -81,6 +88,7 @@ public class MovieShowings extends Activity {
 
         TextView titleTV = (TextView) findViewById(R.id.theaterName);
         titleTV.setText(intent.getStringExtra(MainActivity.SELECTED_VENUE_NAME));
+        mHelper = new MovieHelper();
         movieList = new GetMovieShowings();
         movieList.execute();
 
@@ -223,6 +231,7 @@ public class MovieShowings extends Activity {
                         int mPos = movieURL.indexOf("movie=") + 6;
                         int mEnd = movieURL.indexOf("&wired=");
                         String movieID = movieURL.substring(mPos, mEnd);
+                        selMovieFanID = movieID;
 
                         try{ //use fandango to get poster Image
 
@@ -230,8 +239,8 @@ public class MovieShowings extends Activity {
                             LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                             View layout = layoutInflater.inflate(R.layout.activity_movie_info, viewGroup);
 
-                            int popupWidth = 610;
-                            int popupHeight = 800;
+                            int popupWidth = 800;
+                            int popupHeight = 900;
 
                             Document doc = Jsoup.connect("http://www.fandango.com/movies/1/movieoverview.aspx?mid=" + movieID).get();
 
@@ -250,7 +259,6 @@ public class MovieShowings extends Activity {
                                 Element posterImage = posterElement.children().first();
                                 String imageURL = posterImage.attr("src");
 
-                                //todo show image to user
                                 URL url = new URL(imageURL);
                                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                                 ImageView image = (ImageView) layout.findViewById(R.id.posterImage);
@@ -260,6 +268,7 @@ public class MovieShowings extends Activity {
 
                             TextView mName = (TextView) layout.findViewById(R.id.selMovieName);
                             mName.setText(movieName);
+                            selMovieName = movieName;
 
                             TextView mInfo = (TextView) layout.findViewById(R.id.selMovieInfo);
                             mInfo.setText(movieInfo);
@@ -273,7 +282,7 @@ public class MovieShowings extends Activity {
                             popup.setAnimationStyle(R.style.PopupWindowAnimation);
 
                             // Displaying the popup at the specified location, + offsets.
-                            popup.showAtLocation(layout, Gravity.NO_GRAVITY, 55, 200);
+                            popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
                             checkSpan = (LinearLayout) layout.findViewById(R.id.checkinSpan);
                             confirmSpan = (LinearLayout) layout.findViewById(R.id.completeSpan);
@@ -315,6 +324,11 @@ public class MovieShowings extends Activity {
                                         String responseBody = EntityUtils.toString(response.getEntity());
 
                                         if (responseBody != null && responseBody != ""){
+                                            float thisRating = 0;
+
+                                            RatingBar rb = (RatingBar) checkSpan.findViewById(R.id.ratingBar);
+                                            thisRating = rb.getRating();
+
                                             checkSpan.setVisibility(View.GONE);
                                             confirmSpan.setVisibility(View.VISIBLE);
 
@@ -325,7 +339,12 @@ public class MovieShowings extends Activity {
 
                                             LinearLayout score_view = (LinearLayout) confirmSpan.findViewById(R.id.scoreList);
 
-                                            //todo make message work
+
+
+
+                                            //SAVE MOVIE TO DB
+                                            mHelper.SaveMovie(selMovieName, selMovieFanID, selVenue, thisRating, v.getContext());
+
                                             for(int i = 0 ; i < notifications.length(); i++){
                                                JSONObject jo = notifications.getJSONObject(i);
                                                 String mType = jo.getString("type");
@@ -338,22 +357,31 @@ public class MovieShowings extends Activity {
                                                         JSONObject scoreObj = scoreArray.getJSONObject(j);
                                                         String scoreMsg = scoreObj.getString("message");
                                                         String scorePoints = scoreObj.getString("points");
-                                                        String scoreIcon = scoreObj.getString("icon");
+                                                        String scoreIconURL = scoreObj.getString("icon");
 
                                                         LinearLayout scoreRow = new LinearLayout(v.getContext());
                                                         scoreRow.setOrientation(LinearLayout.HORIZONTAL);
 
                                                         TextView scoreMessage = new TextView(v.getContext());
+                                                        LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.7f);
+                                                        scoreMessage.setLayoutParams(textParams);
                                                         scoreMessage.setText(scoreMsg);
+
+                                                        ImageView scoreImage = new ImageView(v.getContext());
+                                                        scoreImage.setLayoutParams(new LinearLayout.LayoutParams(66,66));
+
+                                                        URL iconURL = new URL(scoreIconURL);
+                                                        Bitmap bmp = BitmapFactory.decodeStream(iconURL.openConnection().getInputStream());
+                                                        scoreImage.setImageBitmap(bmp);
 
                                                         TextView scoreTally = new TextView(v.getContext());
                                                         scoreTally.setText(scorePoints);
 
                                                         scoreRow.addView(scoreMessage, 0);
-                                                        scoreRow.addView(scoreTally, 1);
+                                                        scoreRow.addView(scoreImage, 1);
+                                                        scoreRow.addView(scoreTally, 2);
 
                                                         score_view.addView(scoreRow);
-
                                                     }
                                                 }
                                             }
