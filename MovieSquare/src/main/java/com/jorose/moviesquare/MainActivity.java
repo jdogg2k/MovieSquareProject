@@ -1,6 +1,8 @@
 package com.jorose.moviesquare;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,13 +15,22 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -33,6 +44,10 @@ import com.foursquare.android.nativeoauth.FoursquareOAuthException;
 import com.foursquare.android.nativeoauth.FoursquareUnsupportedVersionException;
 import com.foursquare.android.nativeoauth.model.AccessTokenResponse;
 import com.foursquare.android.nativeoauth.model.AuthCodeResponse;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -49,6 +64,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -63,6 +79,24 @@ public class MainActivity extends Activity {
 
     private static final int REQUEST_CODE_FSQ_CONNECT = 200;
     private static final int REQUEST_CODE_FSQ_TOKEN_EXCHANGE = 201;
+
+    private String[] mMenuTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private FrameLayout frame;
+
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+
+    private LayoutInflater inflater;
+
+    private static final LatLng SYDNEY = new LatLng(-33.88,151.21);
+    private static final LatLng MOUNTAIN_VIEW = new LatLng(37.4, -122.1);
+
+    private GoogleMap mMap;
+    private int menuPos = 0;
+
 
     /**
      * Obtain your client id and secret from:
@@ -79,10 +113,148 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ensureUi();
-        childList = new GetChildList();
-        childList.execute();
+        mTitle = mDrawerTitle = getTitle();
+        mMenuTitles = getResources().getStringArray(R.array.menu_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        frame = (FrameLayout) findViewById(R.id.content_frame);
+
+        inflater = getLayoutInflater();
+
+        //FrameLayout frame = (FrameLayout) findViewById(R.id.content_frame);
+        //inflater.inflate(R.layout.venue_list, frame);
+
+        // set a custom shadow that overlays the main content when the drawer opens
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        // set up the drawer's list view with items and click listener
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, mMenuTitles));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        // ActionBarDrawerToggle ties together the the proper interactions
+        // between the sliding drawer and the action bar app icon
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        if (savedInstanceState == null) {
+            selectItem(0, this.findViewById(R.id.content_frame));
+        }
     }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            selectItem(position, view);
+        }
+    }
+
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position, View v) {
+
+        frame.removeAllViews();
+        int tView = R.layout.venue_list;
+
+        if (position == 1){
+
+
+        }
+        if (position == 2){
+            tView = R.layout.movie_map;
+
+           /* MapFragment mMapFragment = MapFragment.newInstance();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.content_frame, mMapFragment);
+            fragmentTransaction.commit();
+
+           /* map = mMapFragment.getMap();
+
+            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15));*/
+
+        }
+
+        inflater.inflate(tView, frame);
+
+        if (position == 2){
+            setUpMapIfNeeded();
+        }
+        if (position == 0) {
+            ensureUi();
+            childList = new GetChildList();
+            childList.execute();
+        }
+
+        menuPos = position;
+
+        /*if (position == 2){
+            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15));
+        }*/
+
+        // Highlight the selected item, update the title, and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mMenuTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    private void setUpMapIfNeeded() {
+        // Do a null check to confirm that we have not already instantiated the map.
+
+        if (mMap == null) {
+            // Try to obtain the map from the SupportMapFragment.
+            FragmentManager fm = getFragmentManager();
+            mMap = ((MapFragment) fm.findFragmentById(R.id.map)).getMap();
+            // Check if we were successful in obtaining the map.
+            if (mMap != null) {
+                launchMap();
+            } else {
+                setUpMapIfNeeded();
+            }
+        }
+    }
+
+    private void launchMap() {
+        MySQLiteHelper db = new MySQLiteHelper(frame.getContext());
+        ListView lv = (ListView) frame.findViewById(R.id.myMovieView);
+        List<Movie> movies = db.getAllMovies();
+        for (int i=0; i<movies.size(); i++) {
+            Movie m = (Movie) movies.get(i);
+            String mName = m.getTitle();
+        }
+        mMap.setMyLocationEnabled(true);
+        
+
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+       mTitle = title;
+       getActionBar().setTitle(mTitle);
+    }
+
+
+
+
 
     private class GetChildList extends AsyncTask<String, Void, String>{
 
