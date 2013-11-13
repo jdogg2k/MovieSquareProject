@@ -2,21 +2,16 @@ package com.jorose.moviesquare;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.os.Vibrator;
-import android.provider.Settings;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
@@ -24,16 +19,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.foursquare.android.nativeoauth.FoursquareCancelException;
@@ -44,7 +34,6 @@ import com.foursquare.android.nativeoauth.FoursquareOAuthException;
 import com.foursquare.android.nativeoauth.FoursquareUnsupportedVersionException;
 import com.foursquare.android.nativeoauth.model.AccessTokenResponse;
 import com.foursquare.android.nativeoauth.model.AuthCodeResponse;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -62,9 +51,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 
@@ -237,10 +226,22 @@ public class MainActivity extends Activity {
         MySQLiteHelper db = new MySQLiteHelper(frame.getContext());
         ListView lv = (ListView) frame.findViewById(R.id.myMovieView);
         List<Movie> movies = db.getAllMovies();
-        for (int i=0; i<movies.size(); i++) {
-            Movie m = (Movie) movies.get(i);
-            String mName = m.getTitle();
+
+
+        List<Map<String, String>> list = new ArrayList<Map<String,String>>();
+
+        for (Movie i : movies) {
+            Map map = new HashMap();
+            map.put("title", i.getTitle());
+            map.put("rating", i.getRating());
+            list.add(map);
         }
+
+        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.my_movies_layout, new String[] { "title", "rating" },
+                new int[] { R.id.my_movie_title, R.id.my_movie_rating });
+
+        lv.setAdapter(adapter);
+
         mMap.setMyLocationEnabled(true);
         
 

@@ -14,6 +14,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Movies table name
     private static final String TABLE_MOVIES= "movies";
+    // Venues table name
+    private static final String TABLE_VENUES= "venues";
 
     // Movies Table Columns names
     private static final String KEY_ID = "id";
@@ -22,6 +24,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String KEY_THEATER_ID = "theater_id";
     private static final String KEY_RATING = "rating";
     private static final String KEY_DATESTR = "date_str";
+
+    // Venues Table Columns names
+    private static final String KEY_V_ID = "id";
+    private static final String KEY_V_VENUE_ID = "venue_id";
+    private static final String KEY_V_TYPE = "venue_type";
+    private static final String KEY_V_NAME = "venue_name";
+    private static final String KEY_V_LAT = "lat";
+    private static final String KEY_V_LONG = "long";
 
     private static final String[] COLUMNS = {KEY_ID,KEY_TITLE,KEY_FAN_ID,KEY_THEATER_ID,KEY_RATING,KEY_DATESTR};
 
@@ -76,6 +86,32 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         // 3. insert
         if (db != null) {
             db.insert(TABLE_MOVIES, // table
+                    null, //nullColumnHack
+                    values); // key/value -> keys = column names/ values = column values
+        }
+
+        // 4. close
+        db.close();
+    }
+
+    public void addVenue(Venue venue){
+        //for logging
+        Log.d("ADDVENUE", venue.toString());
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put(KEY_V_ID, venue.getVenue_id()); // get title
+        values.put(KEY_V_TYPE, venue.getVenue_type()); // get fandangoID
+        values.put(KEY_V_NAME, venue.getVenue_name()); // get theater
+        values.put(KEY_V_LAT, venue.getLat()); // get ratingNum
+        values.put(KEY_V_LONG, venue.getLng()); // get Date
+
+        // 3. insert
+        if (db != null) {
+            db.insert(TABLE_VENUES, // table
                     null, //nullColumnHack
                     values); // key/value -> keys = column names/ values = column values
         }
