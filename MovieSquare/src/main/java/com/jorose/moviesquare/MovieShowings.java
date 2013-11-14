@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -67,6 +68,9 @@ import com.jorose.moviesquare.MovieHelper;
 public class MovieShowings extends Activity {
 
     String selVenue;
+    String selVenueName;
+    String selVenueLat;
+    String selVenueLng;
     String selMovieName;
     String selMovieFanID;
     String jsonResult;
@@ -83,11 +87,13 @@ public class MovieShowings extends Activity {
         // Get the message from the intent
         Intent intent = getIntent();
         selVenue = intent.getStringExtra(MainActivity.SELECTED_VENUE_ID);
-
+        selVenueName = intent.getStringExtra(MainActivity.SELECTED_VENUE_NAME);
+        selVenueLat = intent.getStringExtra(MainActivity.SELECTED_VENUE_LAT);
+        selVenueLng = intent.getStringExtra(MainActivity.SELECTED_VENUE_LNG);
         setContentView(R.layout.activity_movie_showings);
 
         TextView titleTV = (TextView) findViewById(R.id.theaterName);
-        titleTV.setText(intent.getStringExtra(MainActivity.SELECTED_VENUE_NAME));
+        titleTV.setText(selVenueName);
         mHelper = new MovieHelper();
         movieList = new GetMovieShowings();
         movieList.execute();
@@ -311,11 +317,19 @@ public class MovieShowings extends Activity {
 
                                         Global global = ((Global)getApplicationContext());
 
+                                        int paramCount = 2;
+                                        if (Debug.isDebuggerConnected()){
+                                            paramCount = 3;
+                                        }
+
                                         // Add your data
-                                        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                                        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(paramCount);
                                         nameValuePairs.add(new BasicNameValuePair("oauth_token", auth_token));
                                         nameValuePairs.add(new BasicNameValuePair("venueId", global.get_venue()));
                                         nameValuePairs.add(new BasicNameValuePair("eventId", global.get_event()));
+                                        if (Debug.isDebuggerConnected()){
+                                            nameValuePairs.add(new BasicNameValuePair("broadcast", "private")); //todo REMOVE FOR RELEASE
+                                        }
                                         httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                                         // Execute HTTP Post Request
@@ -339,8 +353,8 @@ public class MovieShowings extends Activity {
 
                                             LinearLayout score_view = (LinearLayout) confirmSpan.findViewById(R.id.scoreList);
 
-
-
+                                            //SaveVenue - Only if it doesn't exist
+                                            mHelper.SaveVenue(selVenue, selVenueName, Float.valueOf(selVenueLat), Float.valueOf(selVenueLng), v.getContext());
 
                                             //SAVE MOVIE TO DB
                                             mHelper.SaveMovie(selMovieName, selMovieFanID, selVenue, thisRating, v.getContext());

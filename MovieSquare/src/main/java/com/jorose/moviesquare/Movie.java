@@ -10,23 +10,25 @@ public class Movie {
     private String theater_id;
     private float rating;
     private String dateStr;
+    private Venue venue;
 
     public Movie(){}
 
-    public Movie(String title, String fan_id, String theater_id, float rating, String dateStr) {
+    public Movie(String title, String fan_id, String theater_id, float rating, String dateStr, Venue venue) {
         super();
         this.title = title;
         this.fan_id = fan_id;
         this.theater_id = theater_id;
         this.rating = rating;
         this.dateStr = dateStr;
+        this.venue = venue;
     }
 
     //getters & setters
 
     @Override
     public String toString() {
-        return "Movie [id=" + id + ", title=" + title + ", fan_id=" + fan_id + ", theater_id=" + theater_id + ", rating=" + rating + ", dateStr=" + dateStr + "]";
+        return "Movie [id=" + id + ", title=" + title + ", fan_id=" + fan_id + ", theater_id=" + theater_id + ", rating=" + rating + ", dateStr=" + dateStr + ", venue=" + venue + "]";
     }
 
     public int getId() {
@@ -75,5 +77,13 @@ public class Movie {
 
     public void setDateStr(String dateStrParam) {
         dateStr = dateStrParam;
+    }
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public void setVenue(Venue ven) {
+        venue = ven;
     }
 }

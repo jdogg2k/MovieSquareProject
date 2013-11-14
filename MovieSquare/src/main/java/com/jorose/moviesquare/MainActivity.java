@@ -22,7 +22,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -34,9 +36,12 @@ import com.foursquare.android.nativeoauth.FoursquareOAuthException;
 import com.foursquare.android.nativeoauth.FoursquareUnsupportedVersionException;
 import com.foursquare.android.nativeoauth.model.AccessTokenResponse;
 import com.foursquare.android.nativeoauth.model.AuthCodeResponse;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -51,9 +56,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -61,10 +71,14 @@ public class MainActivity extends Activity {
 
     public final static String SELECTED_VENUE_ID = "com.jorose.moviesquare.VENUE_ID";
     public final static String SELECTED_VENUE_NAME = "com.jorose.moviesquare.VENUE_NAME";
+    public final static String SELECTED_VENUE_LAT = "com.jorose.moviesquare.VENUE_LAT";
+    public final static String SELECTED_VENUE_LNG= "com.jorose.moviesquare.VENUE_LNG";
     String jsonResult;
     GetChildList childList;
     String selVenueID;
     String selVenueName;
+    String selVenueLat;
+    String selVenueLng;
 
     private static final int REQUEST_CODE_FSQ_CONNECT = 200;
     private static final int REQUEST_CODE_FSQ_TOKEN_EXCHANGE = 201;
@@ -146,23 +160,30 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(0, this.findViewById(R.id.content_frame));
+            try {
+                selectItem(0, this.findViewById(R.id.content_frame));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            selectItem(position, view);
+            try {
+                selectItem(position, view);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     /** Swaps fragments in the main content view */
-    private void selectItem(int position, View v) {
+    private void selectItem(int position, View v) throws ParseException {
 
         frame.removeAllViews();
         int tView = R.layout.venue_list;
-
         if (position == 1){
 
 
@@ -206,7 +227,7 @@ public class MainActivity extends Activity {
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    private void setUpMapIfNeeded() {
+    private void setUpMapIfNeeded() throws ParseException {
         // Do a null check to confirm that we have not already instantiated the map.
 
         if (mMap == null) {
@@ -222,7 +243,32 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void launchMap() {
+    private class MyMovieBinder implements SimpleAdapter.ViewBinder {
+        @Override
+        public boolean setViewValue(View view, Object data, String textRepresentation) {
+            if(view.getId() == R.id.my_movie_rating){
+                float ratingValue = (Float) data;
+                RatingBar ratingBar = (RatingBar) view;
+                ratingBar.setRating(ratingValue);
+                return true;
+            }
+            if(view.getId() == R.id.my_movie_icon){
+                String venueType = (String) data;
+                ImageView iv = (ImageView) view;
+                if (venueType.equals("AMC")){
+                    iv.setImageResource(R.drawable.amc);
+                } else if (venueType.equals("Regal")){
+                    iv.setImageResource(R.drawable.regal);
+                } else {
+                    iv.setImageResource(R.drawable.video);
+                }
+                return true;
+            }
+            return false;
+        }
+    }
+
+    private void launchMap() throws ParseException {
         MySQLiteHelper db = new MySQLiteHelper(frame.getContext());
         ListView lv = (ListView) frame.findViewById(R.id.myMovieView);
         List<Movie> movies = db.getAllMovies();
@@ -233,18 +279,45 @@ public class MainActivity extends Activity {
         for (Movie i : movies) {
             Map map = new HashMap();
             map.put("title", i.getTitle());
+
+            String target = i.getDateStr();
+            DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+            DateFormat newf = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.ENGLISH);
+            Date mDate =  df.parse(target);
+            String newDate = newf.format(mDate);
+
+            map.put("date", newDate);
             map.put("rating", i.getRating());
+            map.put("lat", String.valueOf(i.getVenue().getLat()));
+            map.put("lng", String.valueOf(i.getVenue().getLng()));
+            map.put("type", i.getVenue().getVenue_type());
+            map.put("venue_name", i.getVenue().getVenue_name());
             list.add(map);
         }
 
-        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.my_movies_layout, new String[] { "title", "rating" },
-                new int[] { R.id.my_movie_title, R.id.my_movie_rating });
-
+        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.my_movies_layout, new String[] { "title", "date", "rating", "type" },
+                new int[] { R.id.my_movie_title, R.id.my_movie_date, R.id.my_movie_rating, R.id.my_movie_icon });
+        adapter.setViewBinder(new MyMovieBinder());
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map item = (Map)parent.getAdapter().getItem(position);
+                LatLng latlong = new LatLng(Double.valueOf(item.get("lat").toString()), Double.valueOf(item.get("lng").toString()));
 
+                mMap.clear();
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(latlong)
+                        .title(item.get("title").toString())
+                        .snippet(item.get("venue_name").toString()));
+
+
+                // Zoom in, animating the camera.
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlong, 13), 800, null);
+                marker.showInfoWindow();
+            }
+        });
         mMap.setMyLocationEnabled(true);
-        
-
     }
 
     @Override
@@ -393,6 +466,8 @@ public class MainActivity extends Activity {
 
                         selVenueID = hm.get("id").toString();
                         selVenueName = hm.get("name").toString();
+                        selVenueLat = hm.get("lat").toString();
+                        selVenueLng = hm.get("lng").toString();
                         showMovies(listView);
 
                     }
@@ -409,6 +484,8 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, MovieShowings.class);
         intent.putExtra(SELECTED_VENUE_ID, selVenueID);
         intent.putExtra(SELECTED_VENUE_NAME, selVenueName);
+        intent.putExtra(SELECTED_VENUE_LAT, selVenueLat);
+        intent.putExtra(SELECTED_VENUE_LNG, selVenueLng);
         global.set_venue(selVenueID);
         startActivity(intent);
     }
