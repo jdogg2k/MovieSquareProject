@@ -11,7 +11,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/theaterName"
-            android:layout_gravity="left|center_vertical"/>
+            android:layout_gravity="left|center_vertical"
+            android:padding="8dp"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
 
     <ListView
             android:layout_width="wrap_content"

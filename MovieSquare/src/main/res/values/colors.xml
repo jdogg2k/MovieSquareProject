@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <color name="blue">#000088</color>
+    <color name="lightBlue">#ff6ad5d5</color>
+    <drawable name="focused">#ff5500</drawable>
+    <drawable name="selected">#FF00FF</drawable>
 </resources>

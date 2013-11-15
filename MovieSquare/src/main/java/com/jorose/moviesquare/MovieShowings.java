@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -53,6 +55,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,6 +76,8 @@ public class MovieShowings extends Activity {
     String selVenueLng;
     String selMovieName;
     String selMovieFanID;
+    String selMovieInfo;
+    View movieInfoLayout;
     String jsonResult;
     GetMovieShowings movieList;
     MovieHelper mHelper;
@@ -82,7 +87,6 @@ public class MovieShowings extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         // Get the message from the intent
         Intent intent = getIntent();
@@ -94,6 +98,10 @@ public class MovieShowings extends Activity {
 
         TextView titleTV = (TextView) findViewById(R.id.theaterName);
         titleTV.setText(selVenueName);
+
+        ListView lv= (ListView) findViewById(R.id.movieShowingsList);
+        lv.setSelector(R.drawable.rowselector);
+
         mHelper = new MovieHelper();
         movieList = new GetMovieShowings();
         movieList.execute();
@@ -224,7 +232,6 @@ public class MovieShowings extends Activity {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         HashMap hm = (HashMap) listView.getItemAtPosition(position);
-
                         Global global = ((Global)getApplicationContext());
 
                         String movieURL = hm.get("url").toString();
@@ -243,57 +250,39 @@ public class MovieShowings extends Activity {
 
                             LinearLayout viewGroup = (LinearLayout) findViewById(R.id.popupLinearLayout);
                             LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                            View layout = layoutInflater.inflate(R.layout.activity_movie_info, viewGroup);
+                            movieInfoLayout = layoutInflater.inflate(R.layout.activity_movie_info, viewGroup);
 
                             int popupWidth = 800;
                             int popupHeight = 900;
 
-                            Document doc = Jsoup.connect("http://www.fandango.com/movies/1/movieoverview.aspx?mid=" + movieID).get();
 
-                            Element posterElement = doc.getElementById("POSTER_LINK");
+                            new FandangoPosterTask().execute(movieID);
 
-                            if (posterElement != null){
-                                String allSource = doc.html();
-                                int topH = allSource.indexOf("<h1");
-                                String subSource = allSource.substring(topH);
-                                int topSpan = subSource.indexOf("<span") + 1;
-                                String spanSource = subSource.substring(topSpan);
-                                int markStart = spanSource.indexOf(">") + 1;
-                                int markEnd = spanSource.indexOf("<");
-                                movieInfo = spanSource.substring(markStart, markEnd);
-
-                                Element posterImage = posterElement.children().first();
-                                String imageURL = posterImage.attr("src");
-
-                                URL url = new URL(imageURL);
-                                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                ImageView image = (ImageView) layout.findViewById(R.id.posterImage);
-                                image.setImageBitmap(bmp);
-
-                            }
-
-                            TextView mName = (TextView) layout.findViewById(R.id.selMovieName);
+                            TextView mName = (TextView) movieInfoLayout.findViewById(R.id.selMovieName);
                             mName.setText(movieName);
                             selMovieName = movieName;
 
-                            TextView mInfo = (TextView) layout.findViewById(R.id.selMovieInfo);
+                            TextView mInfo = (TextView) movieInfoLayout.findViewById(R.id.selMovieInfo);
                             mInfo.setText(movieInfo);
 
                             // Creating the PopupWindow
                             final PopupWindow popup = new PopupWindow();
-                            popup.setContentView(layout);
+                            popup.setContentView(movieInfoLayout);
                             popup.setWidth(popupWidth);
                             popup.setHeight(popupHeight);
                             popup.setFocusable(true);
                             popup.setAnimationStyle(R.style.PopupWindowAnimation);
 
                             // Displaying the popup at the specified location, + offsets.
-                            popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+                            popup.showAtLocation(movieInfoLayout, Gravity.CENTER, 0, 0);
 
-                            checkSpan = (LinearLayout) layout.findViewById(R.id.checkinSpan);
-                            confirmSpan = (LinearLayout) layout.findViewById(R.id.completeSpan);
+                            RatingBar rb1 = (RatingBar) movieInfoLayout.findViewById(R.id.ratingBar);
+                            rb1.performHapticFeedback(View.HAPTIC_FEEDBACK_ENABLED);
 
-                            Button close = (Button) layout.findViewById(R.id.close);
+                            checkSpan = (LinearLayout) movieInfoLayout.findViewById(R.id.checkinSpan);
+                            confirmSpan = (LinearLayout) movieInfoLayout.findViewById(R.id.completeSpan);
+
+                            Button close = (Button) movieInfoLayout.findViewById(R.id.close);
                             close.setOnClickListener(new View.OnClickListener() {
 
                                 @Override
@@ -303,7 +292,7 @@ public class MovieShowings extends Activity {
                                 }
                             });
 
-                            Button fsqCheckIn = (Button) layout.findViewById(R.id.checkInButton);
+                            Button fsqCheckIn = (Button) movieInfoLayout.findViewById(R.id.checkInButton);
                             fsqCheckIn.setOnClickListener(new View.OnClickListener() {
 
                                 @Override
@@ -418,12 +407,75 @@ public class MovieShowings extends Activity {
                             Log.d("Exception",e.toString());
                         }
 
-
-
-
                     }
                 });
 
+            }
+
+            private class FandangoPosterTask extends AsyncTask<String, Integer, Bitmap> {
+                //This class definition states that DownloadImageTask will take String parameters, publish Integer progress updates, and return a Bitmap
+
+                @Override
+                protected void onPreExecute() {
+                    ProgressBar pb = (ProgressBar) movieInfoLayout.findViewById(R.id.posterProgress);
+                    pb.setVisibility(View.VISIBLE);
+                }
+
+                protected Bitmap doInBackground(String...paths) {
+
+                    String movieID = paths[0];
+                    Document doc = null;
+                    try {
+                        doc = Jsoup.connect("http://www.fandango.com/movies/1/movieoverview.aspx?mid=" + movieID).get();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Element posterElement = doc.getElementById("POSTER_LINK");
+
+                    Bitmap bmp = null;
+
+                    if (posterElement != null){
+                        String allSource = doc.html();
+                        int topH = allSource.indexOf("<h1");
+                        String subSource = allSource.substring(topH);
+                        int topSpan = subSource.indexOf("<span") + 1;
+                        String spanSource = subSource.substring(topSpan);
+                        int markStart = spanSource.indexOf(">") + 1;
+                        int markEnd = spanSource.indexOf("<");
+                        selMovieInfo = spanSource.substring(markStart, markEnd);
+
+                        Element posterImage = posterElement.children().first();
+                        String imageURL = posterImage.attr("src");
+
+                        URL url;
+                        try {
+                            url = new URL(imageURL);
+                            bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    return bmp;
+                }
+
+                protected void onProgressUpdate(Integer...progress) {
+//This is a very simple load bar, with SIZE = 10, on step 5 this would display:  [=====     ]
+                    String text = "Downloading\n[";
+
+//You can make a much prettier load bar using a SurfaceView and drawing progress or creating drawable resources and using an ImageView
+                }
+
+                protected void onPostExecute(Bitmap result) {
+
+                    ImageView image = (ImageView) movieInfoLayout.findViewById(R.id.posterImage);
+                    image.setImageBitmap(result);
+                    ProgressBar pb = (ProgressBar) movieInfoLayout.findViewById(R.id.posterProgress);
+                    pb.setVisibility(View.INVISIBLE);
+                }
             }
         }
 

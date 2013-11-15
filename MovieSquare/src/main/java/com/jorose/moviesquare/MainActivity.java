@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -168,6 +169,29 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -181,31 +205,15 @@ public class MainActivity extends Activity {
 
     /** Swaps fragments in the main content view */
     private void selectItem(int position, View v) throws ParseException {
-
         frame.removeAllViews();
         int tView = R.layout.venue_list;
         if (position == 1){
-
-
-        }
-        if (position == 2){
             tView = R.layout.movie_map;
-
-           /* MapFragment mMapFragment = MapFragment.newInstance();
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.content_frame, mMapFragment);
-            fragmentTransaction.commit();
-
-           /* map = mMapFragment.getMap();
-
-            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15));*/
-
         }
 
         inflater.inflate(tView, frame);
 
-        if (position == 2){
+        if (position == 1){
             setUpMapIfNeeded();
         }
         if (position == 0) {
@@ -215,11 +223,6 @@ public class MainActivity extends Activity {
         }
 
         menuPos = position;
-
-        /*if (position == 2){
-            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15));
-        }*/
 
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
