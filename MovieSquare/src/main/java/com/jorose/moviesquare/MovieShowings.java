@@ -21,6 +21,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -282,7 +283,7 @@ public class MovieShowings extends Activity {
                             checkSpan = (LinearLayout) movieInfoLayout.findViewById(R.id.checkinSpan);
                             confirmSpan = (LinearLayout) movieInfoLayout.findViewById(R.id.completeSpan);
 
-                            Button close = (Button) movieInfoLayout.findViewById(R.id.close);
+                            ImageButton close = (ImageButton) movieInfoLayout.findViewById(R.id.close);
                             close.setOnClickListener(new View.OnClickListener() {
 
                                 @Override

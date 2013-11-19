@@ -19,4 +19,6 @@
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="edit_movie">Edit Movie</string>
+    <string name="delete_movie">Delete Movie</string>
 </resources>

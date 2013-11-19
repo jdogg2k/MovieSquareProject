@@ -16,8 +16,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -80,6 +83,9 @@ public class MainActivity extends Activity {
     String selVenueName;
     String selVenueLat;
     String selVenueLng;
+    Double curLat;
+    Double curLong;
+    ActionMode mActionMode;
 
     private static final int REQUEST_CODE_FSQ_CONNECT = 200;
     private static final int REQUEST_CODE_FSQ_TOKEN_EXCHANGE = 201;
@@ -276,6 +282,7 @@ public class MainActivity extends Activity {
         ListView lv = (ListView) frame.findViewById(R.id.myMovieView);
         List<Movie> movies = db.getAllMovies();
 
+        registerForContextMenu(lv);
 
         List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 
@@ -302,6 +309,7 @@ public class MainActivity extends Activity {
                 new int[] { R.id.my_movie_title, R.id.my_movie_date, R.id.my_movie_rating, R.id.my_movie_icon });
         adapter.setViewBinder(new MyMovieBinder());
         lv.setAdapter(adapter);
+        lv.setLongClickable(true);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -320,7 +328,25 @@ public class MainActivity extends Activity {
                 marker.showInfoWindow();
             }
         });
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           final int arg2, long arg3) {
+                if (mActionMode != null) {
+                    return false;
+                }
+
+                // Start the CAB using the ActionMode.Callback defined above
+                mActionMode = MainActivity.this.startActionMode(mActionModeCallback);
+                arg1.setSelected(true);
+                return true;
+            }
+        });
+
+
         mMap.setMyLocationEnabled(true);
+        LatLng curLatLong = new LatLng(curLat, curLong);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curLatLong, 11), 400, null);
     }
 
     @Override
@@ -329,8 +355,43 @@ public class MainActivity extends Activity {
        getActionBar().setTitle(mTitle);
     }
 
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
+        // Called when the action mode is created; startActionMode() was called
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.movie_menu, menu);
+            return true;
+        }
 
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.edit_movie:
+                    //shareCurrentItem();
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        // Called when the user exits the action mode
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+        }
+    };
 
 
     private class GetChildList extends AsyncTask<String, Void, String>{
@@ -341,11 +402,13 @@ public class MainActivity extends Activity {
         protected String doInBackground(String... params) {
             // TODO Check for location via GPS OR WIFI
 
-            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            double longitude = location.getLongitude();
-            double latitude = location.getLatitude();
-            String latLong = Double.toString(latitude) + "," + Double.toString(longitude);
+            //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            //Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            double[] latlong = getGPS();
+            curLat = latlong[0];
+            curLong = latlong[1];
+
+            String latLong = Double.toString(curLat) + "," + Double.toString(curLong);
 
             DefaultHttpClient httpclient = new DefaultHttpClient();
             final HttpParams httpParams = httpclient.getParams();
@@ -376,6 +439,27 @@ public class MainActivity extends Activity {
             }
 
             return jsonResult;
+        }
+
+        private double[] getGPS() {
+            LocationManager lm = (LocationManager) getSystemService(
+                    Context.LOCATION_SERVICE);
+            List<String> providers = lm.getProviders(true);
+
+            Location l = null;
+
+            for (int i=providers.size()-1; i>=0; i--) {
+                l = lm.getLastKnownLocation(providers.get(i));
+                if (l != null) break;
+            }
+
+            double[] gps = new double[2];
+            if (l != null) {
+                gps[0] = l.getLatitude();
+                gps[1] = l.getLongitude();
+            }
+
+            return gps;
         }
 
         protected void onPostExecute(String Result){
