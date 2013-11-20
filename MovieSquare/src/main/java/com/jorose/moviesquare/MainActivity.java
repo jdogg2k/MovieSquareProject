@@ -27,9 +27,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.foursquare.android.nativeoauth.FoursquareCancelException;
@@ -86,6 +89,9 @@ public class MainActivity extends Activity {
     Double curLat;
     Double curLong;
     ActionMode mActionMode;
+    MovieHelper mHelper;
+
+    ListView lv;
 
     private static final int REQUEST_CODE_FSQ_CONNECT = 200;
     private static final int REQUEST_CODE_FSQ_TOKEN_EXCHANGE = 201;
@@ -173,6 +179,8 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }
         }
+
+        mHelper = new MovieHelper();
     }
 
     @Override
@@ -277,9 +285,17 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.movie_menu, menu);
+    }
+
     private void launchMap() throws ParseException {
         MySQLiteHelper db = new MySQLiteHelper(frame.getContext());
-        ListView lv = (ListView) frame.findViewById(R.id.myMovieView);
+        lv = (ListView) frame.findViewById(R.id.myMovieView);
         List<Movie> movies = db.getAllMovies();
 
         registerForContextMenu(lv);
@@ -288,6 +304,7 @@ public class MainActivity extends Activity {
 
         for (Movie i : movies) {
             Map map = new HashMap();
+            map.put("id", i.getId());
             map.put("title", i.getTitle());
 
             String target = i.getDateStr();
@@ -310,6 +327,7 @@ public class MainActivity extends Activity {
         adapter.setViewBinder(new MyMovieBinder());
         lv.setAdapter(adapter);
         lv.setLongClickable(true);
+        registerForContextMenu(lv);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -328,7 +346,7 @@ public class MainActivity extends Activity {
                 marker.showInfoWindow();
             }
         });
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        /*lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            final int arg2, long arg3) {
@@ -341,7 +359,7 @@ public class MainActivity extends Activity {
                 arg1.setSelected(true);
                 return true;
             }
-        });
+        });*/
 
 
         mMap.setMyLocationEnabled(true);
@@ -355,44 +373,23 @@ public class MainActivity extends Activity {
        getActionBar().setTitle(mTitle);
     }
 
-    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-
-        // Called when the action mode is created; startActionMode() was called
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // Inflate a menu resource providing context menu items
-            MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.movie_menu, menu);
-            return true;
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int hitMovie = info.position;
+        HashMap hMap = (HashMap) lv.getItemAtPosition(hitMovie);
+        String selMovieNumber = hMap.get("id").toString();
+        switch (item.getItemId()) {
+            case R.id.edit_movie:
+                //editNote(info.id);
+                return true;
+            case R.id.delete_movie:
+                mHelper.RemoveMovie(selMovieNumber, lv.getContext());
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
-
-        // Called each time the action mode is shown. Always called after onCreateActionMode, but
-        // may be called multiple times if the mode is invalidated.
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false; // Return false if nothing is done
-        }
-
-        // Called when the user selects a contextual menu item
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.edit_movie:
-                    //shareCurrentItem();
-                    mode.finish(); // Action picked, so close the CAB
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        // Called when the user exits the action mode
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            mActionMode = null;
-        }
-    };
-
+    }
 
     private class GetChildList extends AsyncTask<String, Void, String>{
 

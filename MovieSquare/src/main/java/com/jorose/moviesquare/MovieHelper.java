@@ -1,6 +1,7 @@
 package com.jorose.moviesquare;
 
 import android.content.Context;
+import android.widget.ListView;
 
 import java.util.Calendar;
 
@@ -21,6 +22,12 @@ public class MovieHelper {
         db.addMovie(new Movie(title, fID, tID, rating, thisDate, null));
 
         //db.getAllMovies();
+    }
+
+    public void RemoveMovie(String mID, Context c){
+        MySQLiteHelper db = new MySQLiteHelper(c);
+        Movie badMovie = db.getMovie(Integer.parseInt(mID));
+        db.deleteMovie(badMovie);
     }
 
     public void SaveVenue(String venue_id, String venue_name, float lat, float lng, Context c){
