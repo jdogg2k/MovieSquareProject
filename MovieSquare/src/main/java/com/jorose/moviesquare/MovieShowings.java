@@ -21,6 +21,8 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -254,8 +256,9 @@ public class MovieShowings extends Activity {
                             movieInfoLayout = layoutInflater.inflate(R.layout.activity_movie_info, viewGroup);
 
                             int popupWidth = 800;
-                            int popupHeight = 900;
+                            int popupHeight = 1200;
 
+                            //todo make dimensions relative
 
                             new FandangoPosterTask().execute(movieID);
 
@@ -307,9 +310,20 @@ public class MovieShowings extends Activity {
 
                                         Global global = ((Global)getApplicationContext());
 
+                                        EditText shoutText = (EditText) checkSpan.findViewById(R.id.movieShout);
+                                        CheckBox faceCheck = (CheckBox) checkSpan.findViewById(R.id.fbCheck);
+
+                                        String checkinPrivacy = "public";
+
                                         int paramCount = 2;
                                         if (Debug.isDebuggerConnected()){
-                                            paramCount = 3;
+                                            checkinPrivacy = "private";
+                                        }
+                                        if (shoutText.getText().toString().length() > 0){
+                                            paramCount++;
+                                        }
+                                        if (faceCheck.isChecked()){
+                                            checkinPrivacy += ",facebook";
                                         }
 
                                         // Add your data
@@ -317,8 +331,10 @@ public class MovieShowings extends Activity {
                                         nameValuePairs.add(new BasicNameValuePair("oauth_token", auth_token));
                                         nameValuePairs.add(new BasicNameValuePair("venueId", global.get_venue()));
                                         nameValuePairs.add(new BasicNameValuePair("eventId", global.get_event()));
-                                        if (Debug.isDebuggerConnected()){
-                                            nameValuePairs.add(new BasicNameValuePair("broadcast", "private")); //todo REMOVE FOR RELEASE
+                                        nameValuePairs.add(new BasicNameValuePair("broadcast", checkinPrivacy));
+
+                                        if (shoutText.getText().toString().length() > 0){
+                                            nameValuePairs.add(new BasicNameValuePair("shout", shoutText.getText().toString()));
                                         }
                                         httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

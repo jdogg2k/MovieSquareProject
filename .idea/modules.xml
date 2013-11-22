@@ -4,8 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MovieSquare/build/source/buildConfig/buildConfig.iml" filepath="$PROJECT_DIR$/MovieSquare/build/source/buildConfig/buildConfig.iml" />
       <module fileurl="file://$PROJECT_DIR$/../foursquare-android-oauth/foursquare-oauth-library/foursquare-oauth-library.iml" filepath="$PROJECT_DIR$/../foursquare-android-oauth/foursquare-oauth-library/foursquare-oauth-library.iml" />
-      <module fileurl="file://$USER_HOME$/Documents/Android/sdk/extras/google/google_play_services/libproject/google-play-services_lib/google-play-services_lib.iml" filepath="$USER_HOME$/Documents/Android/sdk/extras/google/google_play_services/libproject/google-play-services_lib/google-play-services_lib.iml" />
       <module fileurl="file://$APPLICATION_HOME_DIR$/sdk/extras/google/google_play_services/libproject/google-play-services_lib/google-play-services_lib.iml" filepath="$APPLICATION_HOME_DIR$/sdk/extras/google/google_play_services/libproject/google-play-services_lib/google-play-services_lib.iml" />
+      <module fileurl="file://$USER_HOME$/Documents/Android/sdk/extras/google/google_play_services/libproject/google-play-services_lib/google-play-services_lib.iml" filepath="$USER_HOME$/Documents/Android/sdk/extras/google/google_play_services/libproject/google-play-services_lib/google-play-services_lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/MovieSquare/src/main/main.iml" filepath="$PROJECT_DIR$/MovieSquare/src/main/main.iml" />
       <module fileurl="file://$PROJECT_DIR$/MovieSquare/build/source/r/r.iml" filepath="$PROJECT_DIR$/MovieSquare/build/source/r/r.iml" />
     </modules>

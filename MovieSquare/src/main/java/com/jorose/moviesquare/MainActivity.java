@@ -1,7 +1,9 @@
 package com.jorose.moviesquare;
 
 import android.app.Activity;
-import android.app.FragmentManager;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +13,12 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +26,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,11 +34,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -67,6 +80,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +88,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     public final static String SELECTED_VENUE_ID = "com.jorose.moviesquare.VENUE_ID";
     public final static String SELECTED_VENUE_NAME = "com.jorose.moviesquare.VENUE_NAME";
@@ -90,6 +104,9 @@ public class MainActivity extends Activity {
     Double curLong;
     ActionMode mActionMode;
     MovieHelper mHelper;
+    SimpleAdapter movieAdapter;
+    View editMovieLayout;
+    MySQLiteHelper db;
 
     ListView lv;
 
@@ -102,6 +119,8 @@ public class MainActivity extends Activity {
     private ActionBarDrawerToggle mDrawerToggle;
     private FrameLayout frame;
 
+    private Movie selectedMovie;
+
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 
@@ -112,6 +131,10 @@ public class MainActivity extends Activity {
 
     private GoogleMap mMap;
     private int menuPos = 0;
+
+    public FragmentManager fManager ;
+
+    SupportMapFragment mMapFragment;
 
 
     /**
@@ -181,6 +204,8 @@ public class MainActivity extends Activity {
         }
 
         mHelper = new MovieHelper();
+        fManager = getSupportFragmentManager();
+        db = new MySQLiteHelper(frame.getContext());
     }
 
     @Override
@@ -219,17 +244,27 @@ public class MainActivity extends Activity {
 
     /** Swaps fragments in the main content view */
     private void selectItem(int position, View v) throws ParseException {
+        FragmentManager fm = getSupportFragmentManager();
+
         frame.removeAllViews();
         int tView = R.layout.venue_list;
         if (position == 1){
+           if (fm.getFragments() != null){
+               fm.getFragments().clear();
+           }
             tView = R.layout.movie_map;
         }
 
         inflater.inflate(tView, frame);
 
         if (position == 1){
-            setUpMapIfNeeded();
+            MapPageFragment fragment = (MapPageFragment) fm.getFragments().get(0);
+            FragmentManager cm = fragment.getChildFragmentManager();
+            SupportMapFragment mapFragment = (SupportMapFragment) cm.findFragmentById(R.id.map);
+            mMap = mapFragment.getMap();
+            launchMap();
         }
+
         if (position == 0) {
             ensureUi();
             childList = new GetChildList();
@@ -242,22 +277,6 @@ public class MainActivity extends Activity {
         mDrawerList.setItemChecked(position, true);
         setTitle(mMenuTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
-    }
-
-    private void setUpMapIfNeeded() throws ParseException {
-        // Do a null check to confirm that we have not already instantiated the map.
-
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            FragmentManager fm = getFragmentManager();
-            mMap = ((MapFragment) fm.findFragmentById(R.id.map)).getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                launchMap();
-            } else {
-                setUpMapIfNeeded();
-            }
-        }
     }
 
     private class MyMovieBinder implements SimpleAdapter.ViewBinder {
@@ -293,12 +312,8 @@ public class MainActivity extends Activity {
         inflater.inflate(R.menu.movie_menu, menu);
     }
 
-    private void launchMap() throws ParseException {
-        MySQLiteHelper db = new MySQLiteHelper(frame.getContext());
-        lv = (ListView) frame.findViewById(R.id.myMovieView);
+    private void populateMyMovies(ListView tLV) throws ParseException {
         List<Movie> movies = db.getAllMovies();
-
-        registerForContextMenu(lv);
 
         List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 
@@ -322,13 +337,13 @@ public class MainActivity extends Activity {
             list.add(map);
         }
 
-        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.my_movies_layout, new String[] { "title", "date", "rating", "type" },
+        movieAdapter = new SimpleAdapter(this, list, R.layout.my_movies_layout, new String[] { "title", "date", "rating", "type" },
                 new int[] { R.id.my_movie_title, R.id.my_movie_date, R.id.my_movie_rating, R.id.my_movie_icon });
-        adapter.setViewBinder(new MyMovieBinder());
-        lv.setAdapter(adapter);
-        lv.setLongClickable(true);
-        registerForContextMenu(lv);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        movieAdapter.setViewBinder(new MyMovieBinder());
+        tLV.setAdapter(movieAdapter);
+        tLV.setLongClickable(true);
+
+        tLV.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Map item = (Map)parent.getAdapter().getItem(position);
@@ -346,21 +361,15 @@ public class MainActivity extends Activity {
                 marker.showInfoWindow();
             }
         });
-        /*lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           final int arg2, long arg3) {
-                if (mActionMode != null) {
-                    return false;
-                }
 
-                // Start the CAB using the ActionMode.Callback defined above
-                mActionMode = MainActivity.this.startActionMode(mActionModeCallback);
-                arg1.setSelected(true);
-                return true;
-            }
-        });*/
+    }
 
+    private void launchMap() throws ParseException {
+
+        lv = (ListView) frame.findViewById(R.id.myMovieView);
+        registerForContextMenu(lv);
+
+        populateMyMovies(lv);
 
         mMap.setMyLocationEnabled(true);
         LatLng curLatLong = new LatLng(curLat, curLong);
@@ -381,14 +390,103 @@ public class MainActivity extends Activity {
         String selMovieNumber = hMap.get("id").toString();
         switch (item.getItemId()) {
             case R.id.edit_movie:
-                //editNote(info.id);
+                String selMovieName = hMap.get("title").toString();
+                String selRating = hMap.get("rating").toString();
+                String selDate = hMap.get("date").toString();
+                editMovie(selMovieNumber, selMovieName, selRating, selDate);
                 return true;
             case R.id.delete_movie:
                 mHelper.RemoveMovie(selMovieNumber, lv.getContext());
+                try {
+                    populateMyMovies(lv);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    public void editMovie(String mNum, String title, String rating, String date){
+        LinearLayout viewGroup = (LinearLayout) findViewById(R.id.popupLinearLayout);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        editMovieLayout = layoutInflater.inflate(R.layout.edit_movie, viewGroup);
+
+        selectedMovie = db.getMovie(Integer.parseInt(mNum));
+
+        int popupWidth = 800;
+        int popupHeight = 900;
+
+        TextView mName = (TextView) editMovieLayout.findViewById(R.id.editMovieName);
+        mName.setText(title);
+
+        final RatingBar mRating = (RatingBar) editMovieLayout.findViewById(R.id.editRating);
+        mRating.setRating(Float.parseFloat(rating));
+
+        // Creating the PopupWindow
+        final PopupWindow popup = new PopupWindow();
+        popup.setContentView(editMovieLayout);
+        popup.setWidth(popupWidth);
+        popup.setHeight(popupHeight);
+        popup.setFocusable(true);
+        //popup.setAnimationStyle(R.style.PopupWindowAnimation);
+
+        // Displaying the popup at the specified location, + offsets.
+        popup.showAtLocation(editMovieLayout, Gravity.CENTER, 0, 0);
+
+
+        ImageButton close = (ImageButton) editMovieLayout.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+
+            }
+        });
+
+        Button save = (Button) editMovieLayout.findViewById(R.id.saveMovieButton);
+        save.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                selectedMovie.setRating(mRating.getRating());
+                db.updateMovie(selectedMovie);
+                try {
+                    populateMyMovies(lv);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                popup.dismiss();
+
+            }
+        });
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+        }
+    }
+
+    public void showDatePickerDialog(View v) {
+        //DialogFragment newFragment = new DatePickerFragment();
+        //newFragment.show
     }
 
     private class GetChildList extends AsyncTask<String, Void, String>{
