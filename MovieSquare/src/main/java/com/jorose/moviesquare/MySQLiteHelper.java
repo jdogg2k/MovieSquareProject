@@ -220,11 +220,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<Movie> getAllMovies() {
+    public List<Movie> getAllMovies(String order, String direction) {
         List<Movie> movies = new LinkedList<Movie>();
 
         // 1. build the query
-        String query = "SELECT  * FROM " + TABLE_MOVIES;
+        String query = "SELECT  * FROM " + TABLE_MOVIES + " ORDER BY " + order + " " + direction;
 
         // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();

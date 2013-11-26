@@ -2,11 +2,13 @@
 <resources>
 
     <string name="app_name">Movie Square</string>
+    <string name="action_sort">Sort Movies</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">Main</string>
-    <string name="app_not_installed_message">To do this, you’ll need the latest version of Foursquare installed.</string>
+    <string name="no_movie_notice">No Movies stored in your database.  Go out and see something!</string>
     <string name="movie_showings_activity_title">Now Playing</string>
+    <string name="download_foursquare_activity_title">Get Foursquare</string>
     <string name="movie_map_activity_title">Movie Map</string>
     <color name="colorPopUp">#BB000000</color>
     <color name="colorPopUpWindow">#000000</color>

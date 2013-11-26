@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
@@ -120,6 +121,8 @@ public class MainActivity extends FragmentActivity {
     private FrameLayout frame;
 
     private Movie selectedMovie;
+    private String sortStr = "id";
+    private String sortDir = "DESC";
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
@@ -223,6 +226,44 @@ public class MainActivity extends FragmentActivity {
             return true;
         }
 
+        if (item.getTitle().toString().contains("Sort by")){
+            if (sortDir.equals("DESC")){
+                sortDir = "ASC";
+            } else {
+                sortDir = "DESC";
+            }
+        }
+
+        if (item.getTitle().toString().equals("Sort by Title")){
+            sortStr = "title";
+            try {
+                populateMyMovies(lv);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+
+        if (item.getTitle().toString().equals("Sort by Rating")){
+            sortStr = "rating";
+            try {
+                populateMyMovies(lv);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+
+        if (item.getTitle().toString().equals("Sort by Theater")){
+            sortStr = "theater_id";
+            try {
+                populateMyMovies(lv);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 return true;
@@ -255,6 +296,10 @@ public class MainActivity extends FragmentActivity {
             tView = R.layout.movie_map;
         }
 
+        if (position == 2){
+            tView = R.layout.about_layout;
+        }
+
         inflater.inflate(tView, frame);
 
         if (position == 1){
@@ -266,9 +311,20 @@ public class MainActivity extends FragmentActivity {
         }
 
         if (position == 0) {
-            ensureUi();
-            childList = new GetChildList();
-            childList.execute();
+            if (ensureUi()){
+                childList = new GetChildList();
+                childList.execute();
+            }
+        }
+
+        if (position == 2){
+            try {
+                String versionName = v.getContext().getPackageManager().getPackageInfo(v.getContext().getPackageName(), 0).versionName;
+                TextView tv = (TextView) findViewById(R.id.appVersion);
+                tv.setText("Version: " + versionName + " (Beta)");
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         menuPos = position;
@@ -313,54 +369,61 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void populateMyMovies(ListView tLV) throws ParseException {
-        List<Movie> movies = db.getAllMovies();
+        List<Movie> movies = db.getAllMovies(sortStr, sortDir);
 
         List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 
-        for (Movie i : movies) {
-            Map map = new HashMap();
-            map.put("id", i.getId());
-            map.put("title", i.getTitle());
+        if (movies.size() < 1){
 
-            String target = i.getDateStr();
-            DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
-            DateFormat newf = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.ENGLISH);
-            Date mDate =  df.parse(target);
-            String newDate = newf.format(mDate);
+            toastMessage(MainActivity.this, getString(R.string.no_movie_notice));
 
-            map.put("date", newDate);
-            map.put("rating", i.getRating());
-            map.put("lat", String.valueOf(i.getVenue().getLat()));
-            map.put("lng", String.valueOf(i.getVenue().getLng()));
-            map.put("type", i.getVenue().getVenue_type());
-            map.put("venue_name", i.getVenue().getVenue_name());
-            list.add(map);
-        }
+        } else {
 
-        movieAdapter = new SimpleAdapter(this, list, R.layout.my_movies_layout, new String[] { "title", "date", "rating", "type" },
-                new int[] { R.id.my_movie_title, R.id.my_movie_date, R.id.my_movie_rating, R.id.my_movie_icon });
-        movieAdapter.setViewBinder(new MyMovieBinder());
-        tLV.setAdapter(movieAdapter);
-        tLV.setLongClickable(true);
+            for (Movie i : movies) {
+                Map map = new HashMap();
+                map.put("id", i.getId());
+                map.put("title", i.getTitle());
 
-        tLV.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map item = (Map)parent.getAdapter().getItem(position);
-                LatLng latlong = new LatLng(Double.valueOf(item.get("lat").toString()), Double.valueOf(item.get("lng").toString()));
+                String target = i.getDateStr();
+                DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+                DateFormat newf = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.ENGLISH);
+                Date mDate =  df.parse(target);
+                String newDate = newf.format(mDate);
 
-                mMap.clear();
-                Marker marker = mMap.addMarker(new MarkerOptions()
-                        .position(latlong)
-                        .title(item.get("title").toString())
-                        .snippet(item.get("venue_name").toString()));
-
-
-                // Zoom in, animating the camera.
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlong, 13), 800, null);
-                marker.showInfoWindow();
+                map.put("date", newDate);
+                map.put("rating", i.getRating());
+                map.put("lat", String.valueOf(i.getVenue().getLat()));
+                map.put("lng", String.valueOf(i.getVenue().getLng()));
+                map.put("type", i.getVenue().getVenue_type());
+                map.put("venue_name", i.getVenue().getVenue_name());
+                list.add(map);
             }
-        });
+
+            movieAdapter = new SimpleAdapter(this, list, R.layout.my_movies_layout, new String[] { "title", "date", "rating", "type" },
+                    new int[] { R.id.my_movie_title, R.id.my_movie_date, R.id.my_movie_rating, R.id.my_movie_icon });
+            movieAdapter.setViewBinder(new MyMovieBinder());
+            tLV.setAdapter(movieAdapter);
+            tLV.setLongClickable(true);
+
+            tLV.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Map item = (Map)parent.getAdapter().getItem(position);
+                    LatLng latlong = new LatLng(Double.valueOf(item.get("lat").toString()), Double.valueOf(item.get("lng").toString()));
+
+                    mMap.clear();
+                    Marker marker = mMap.addMarker(new MarkerOptions()
+                            .position(latlong)
+                            .title(item.get("title").toString())
+                            .snippet(item.get("venue_name").toString()));
+
+
+                    // Zoom in, animating the camera.
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlong, 13), 800, null);
+                    marker.showInfoWindow();
+                }
+            });
+        }
 
     }
 
@@ -381,6 +444,20 @@ public class MainActivity extends FragmentActivity {
        mTitle = title;
        getActionBar().setTitle(mTitle);
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        String thisTitle = getActionBar().getTitle().toString();
+        if(thisTitle.equals("My Movies")){
+            menu.findItem(R.id.action_sort).setVisible(true);
+
+        }else{
+            menu.findItem(R.id.action_sort).setVisible(false);
+        }
+        return true;
+    }
+
+
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -672,6 +749,15 @@ public class MainActivity extends FragmentActivity {
         startActivity(intent);
     }
 
+    public void emailAuthor(View view) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "jorose@gmail.com" });
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Movie Square");
+        startActivity(Intent.createChooser(intent, ""));
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -679,7 +765,7 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
-    private void ensureUi() {
+    private boolean ensureUi() {
 
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
         String tToken = settings.getString("4sqToken", "none");
@@ -697,15 +783,18 @@ public class MainActivity extends FragmentActivity {
             // get an intent back that would open the Play Store for download.
             // Otherwise we start the auth flow.
             if (FoursquareOAuth.isPlayStoreIntent(intent)) {
-                toastMessage(MainActivity.this, getString(R.string.app_not_installed_message));
-                startActivity(intent);
+                Intent fourIntent = new Intent(MainActivity.this, DownloadFoursquare.class);
+                startActivity(fourIntent);
+                return false;
             } else {
                 startActivityForResult(intent, REQUEST_CODE_FSQ_CONNECT);
+                return true;
             }
         } else {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("4sqToken", ExampleTokenStore.get().getToken().toString());
             editor.commit();
+            return true;
         }
     }
 
