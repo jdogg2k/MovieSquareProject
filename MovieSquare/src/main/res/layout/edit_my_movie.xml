@@ -9,25 +9,25 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/container_dropshadow"
             android:gravity="center"
             android:orientation="vertical">
-
-        <ImageButton
-                android:id="@+id/close"
+        <TextView
+                android:id="@+id/editMyInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:src="@drawable/ic_1navigationcancel"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:text="Thumbs Up or Down?"
+                android:textSize="16dp" />
         <TextView
-                android:id="@+id/editMovieName"
+                android:id="@+id/editMyMovieName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:textSize="18dp"
                 android:textStyle="bold"/>
         <TextView
-                android:id="@+id/editInfo"
+                android:id="@+id/editMyInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -35,7 +35,7 @@
                 android:text="Change Rating"
                 android:textSize="10dp" />
         <RatingBar
-            android:id="@+id/editRating"
+            android:id="@+id/editMyRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="5"

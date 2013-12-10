@@ -9,6 +9,7 @@
     <string name="no_movie_notice">No Movies stored in your database.  Go out and see something!</string>
     <string name="movie_showings_activity_title">Now Playing</string>
     <string name="download_foursquare_activity_title">Get Foursquare</string>
+    <string name="edit_movie_title">Edit Movie Info</string>
     <string name="movie_map_activity_title">Movie Map</string>
     <color name="colorPopUp">#BB000000</color>
     <color name="colorPopUpWindow">#000000</color>
@@ -23,4 +24,7 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="edit_movie">Edit Movie</string>
     <string name="delete_movie">Delete Movie</string>
+    <string name="pref_notification_title">Notifications</string>
+    <string name="pref_notification_toggle_title">Enable Notifications</string>
+    <string name="pref_notification_toggle_summary">Show reminders to rate a movie after you\'ve seen it</string>
 </resources>

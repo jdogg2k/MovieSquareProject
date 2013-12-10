@@ -1,6 +1,10 @@
 package com.jorose.moviesquare;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -77,7 +81,7 @@ public class MovieShowings extends Activity {
     String selVenueName;
     String selVenueLat;
     String selVenueLng;
-    String selMovieName;
+    public String selMovieName;
     String selMovieFanID;
     String selMovieInfo;
     View movieInfoLayout;
@@ -86,6 +90,8 @@ public class MovieShowings extends Activity {
     MovieHelper mHelper;
     LinearLayout checkSpan;
     LinearLayout confirmSpan;
+
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -364,6 +370,24 @@ public class MovieShowings extends Activity {
 
                                             //SAVE MOVIE TO DB
                                             mHelper.SaveMovie(selMovieName, selMovieFanID, selVenue, thisRating, v.getContext());
+
+                                            //set notification to show after movie is over
+                                            global.set_checkinMovieName(selMovieName);
+                                            //set date
+
+                                            Calendar calendar = Calendar.getInstance();
+
+                                            Calendar newTime = (Calendar) calendar.clone();
+                                            //newTime.add(Calendar.HOUR_OF_DAY, 2);
+                                            newTime.add(Calendar.MINUTE, 2);
+                                            //todo set time, clear notification, etc..
+
+                                            Intent myIntent = new Intent(v.getContext(), MyReceiver.class);
+                                            pendingIntent = PendingIntent.getBroadcast(v.getContext(), 0, myIntent,0);
+
+                                            AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                                            alarmManager.set(AlarmManager.RTC, newTime.getTimeInMillis(), pendingIntent);
+
 
                                             for(int i = 0 ; i < notifications.length(); i++){
                                                JSONObject jo = notifications.getJSONObject(i);

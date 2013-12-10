@@ -15,19 +15,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f006cf84-06c8-4c6a-9a25-9bd92b0b38bd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/drawable/foursquareforandroid.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/drawable/movie_reel.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/drawable-hdpi/sort_by.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/drawable-mdpi/sort_by.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/drawable-xhdpi/sort_by.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/drawable-xxhdpi/sort_by.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/DownloadFoursquare.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/about_layout.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/download_foursquare.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/raw/tada.mp3" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/drawable/theater.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/EditMovie.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyAlarmService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyBootReceiver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyReceiver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/NotificationReceiverActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Prefs.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/edit_my_movie.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/menu/options_menu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/xml/preferences.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/result.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/MovieSquare/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Global.java" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Global.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MainActivity.java" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MapPageFragment.java" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MapPageFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MovieShowings.java" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MovieShowings.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MySQLiteHelper.java" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MySQLiteHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/edit_movie.xml" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/layout/edit_movie.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/res/menu/main.xml" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/menu/main.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/MovieSquare/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -98,12 +103,103 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="61" column="19" selection-start="3405" selection-end="3405" vertical-scroll-proportion="0.9905838" vertical-offset="511" max-vertical-offset="1411">
+              <folding>
+                <element signature="e#1077#1095#0" expanded="true" />
+                <element signature="e#1997#2026#0" expanded="true" />
+                <element signature="e#2603#2629#0" expanded="true" />
+                <element signature="e#3056#3100#0" expanded="true" />
+                <element signature="e#3500#3525#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyReceiver.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyReceiver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyBootReceiver.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyBootReceiver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="0" selection-start="226" selection-end="226" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyAlarmService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyAlarmService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="78" column="0" selection-start="2439" selection-end="2439" vertical-scroll-proportion="0.0" vertical-offset="1037" max-vertical-offset="1581">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="preferences.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/xml/preferences.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="47" selection-start="529" selection-end="529" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+              <folding>
+                <element signature="e#168#201#0" expanded="true" />
+                <element signature="e#368#410#0" expanded="true" />
+                <element signature="e#441#481#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/menu/main.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="35" selection-start="790" selection-end="798" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
+              <folding>
+                <element signature="e#128#149#0" expanded="true" />
+                <element signature="e#824#849#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="options_menu.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/menu/options_menu.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="4" selection-start="110" selection-end="195" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="314" column="33" selection-start="11300" selection-end="11301" vertical-scroll-proportion="-7.0" vertical-offset="3708" max-vertical-offset="13617">
+            <state line="234" column="28" selection-start="8958" selection-end="8958" vertical-scroll-proportion="-11.291667" vertical-offset="3707" max-vertical-offset="15232">
               <folding>
-                <element signature="e#13572#13592#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#13838#13858#0" expanded="true" />
+                <element signature="e#13940#13975#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Prefs.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Prefs.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="45" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -112,82 +208,7 @@
       <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="52" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="544">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="44" selection-start="357" selection-end="357" vertical-scroll-proportion="0.27651516" vertical-offset="24" max-vertical-offset="1054">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MapPageFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MapPageFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="0" selection-start="1192" selection-end="1192" vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="595">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Foursquare.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Foursquare.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="13" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0" vertical-offset="1771" max-vertical-offset="3128">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FoursquareError.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/FoursquareError.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="13" selection-start="86" selection-end="86" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DialogError.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/DialogError.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="7" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FoursquareDialog.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/FoursquareDialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="27" selection-start="1491" selection-end="1507" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2771">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/menu/main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="11" selection-start="762" selection-end="762" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="about_layout.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/layout/about_layout.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="13" selection-start="699" selection-end="699" vertical-scroll-proportion="-4.08" vertical-offset="204" max-vertical-offset="1071">
+            <state line="5" column="33" selection-start="172" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
               <folding />
             </state>
           </provider>
@@ -216,21 +237,21 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/res/layout/movie_map.xml" />
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/DatePickerFragment.java" />
         <option value="$PROJECT_DIR$/MovieSquare/src/main/res/layout/edit_movie.xml" />
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/res/drawable/checkbox.xml" />
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MovieShowings.java" />
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/res/layout/activity_movie_info.xml" />
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/res/menu/options.xml" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/res/layout/edit_my_movie.xml" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/EditMovie.java" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Global.java" />
         <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MySQLiteHelper.java" />
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/DownloadFoursquare.java" />
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/res/layout/download_foursquare.xml" />
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MapPageFragment.java" />
-        <option value="$PROJECT_DIR$/MovieSquare/src/main/res/layout/about_layout.xml" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyBootReceiver.java" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyReceiver.java" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MovieShowings.java" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyAlarmService.java" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/res/xml/preferences.xml" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/res/menu/options_menu.xml" />
         <option value="$PROJECT_DIR$/MovieSquare/src/main/res/menu/main.xml" />
         <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MainActivity.java" />
         <option value="$PROJECT_DIR$/MovieSquare/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Prefs.java" />
         <option value="$PROJECT_DIR$/MovieSquare/src/main/AndroidManifest.xml" />
       </list>
     </option>
@@ -273,7 +294,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -290,6 +310,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MovieSquareProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xml" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -339,6 +377,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="raw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MovieSquareProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="menu" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -358,78 +414,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MovieSquareProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable-xxhdpi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MovieSquareProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable-xhdpi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MovieSquareProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable-mdpi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MovieSquareProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable-hdpi" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -503,6 +487,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -517,7 +502,7 @@
     <property name="ExportedModule" value="main" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/MovieSquare/src/main/libs/google-play-services.jar!/" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="019dbf6c09115ec5" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0149B2860C002016" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="AndroidRunProguardForReleaseBuild" value="false" />
@@ -528,6 +513,11 @@
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Android\workspace\MovieSquareProject\MovieSquare\src\main\res\layout" />
+    </key>
   </component>
   <component name="RunManager" selected="16934672-e43a-4b37-8479-69e43677f592">
     <configuration default="false" name="build" type="GroovyScriptRunConfiguration" factoryName="Groovy" id="1cc63299-0dda-4295-bc90-2ade6d8f50a2" temporary="true">
@@ -750,7 +740,9 @@
       <workItem from="1384552346749" duration="276000" />
       <workItem from="1384876791759" duration="10152000" />
       <workItem from="1385064319537" duration="20826000" />
-      <workItem from="1385394603238" duration="20344000" />
+      <workItem from="1385394603238" duration="21032000" />
+      <workItem from="1385999138572" duration="36358000" />
+      <workItem from="1386698196684" duration="10233000" />
     </task>
     <task id="LOCAL-00001" summary="Added some improvements">
       <created>1376685501272</created>
@@ -808,11 +800,15 @@
       <created>1385407394608</created>
       <updated>1385407394608</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="First production release version">
+      <created>1385502426000</created>
+      <updated>1385502426000</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="169035000" />
+    <option name="totallyTimeSpent" value="216314000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -841,11 +837,10 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17662753" sideWeight="0.6890309" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17662753" sideWeight="0.6048988" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39616615" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39297125" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39616615" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -856,13 +851,14 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.6705632" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2524013" sideWeight="0.60383385" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2524013" sideWeight="0.6070288" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32943678" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -911,7 +907,8 @@
     <MESSAGE value="Added initial SQLite DB saving of movie data upon checkin" />
     <MESSAGE value="Added icons, and format to movie list - map control" />
     <MESSAGE value="Working edit/delete re-rating" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working edit/delete re-rating" />
+    <MESSAGE value="First production release version" />
+    <option name="LAST_COMMIT_MESSAGE" value="First production release version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -921,134 +918,136 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/layout/venue_list.xml">
-      <provider editor-type-id="android-designer">
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/drawable/movie_reel.png">
+      <provider selected="true" editor-type-id="images">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Global.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="865" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="425">
+        <state line="29" column="5" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="629">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MySQLiteHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="215" column="55" selection-start="7546" selection-end="7546" vertical-scroll-proportion="0.0" vertical-offset="3213" max-vertical-offset="6273">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/EditMovie.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="920" selection-end="920" vertical-scroll-proportion="0.0" vertical-offset="393" max-vertical-offset="1156">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MovieShowings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="31" selection-start="2557" selection-end="2557" vertical-scroll-proportion="-2.8240132" vertical-offset="2040" max-vertical-offset="7293">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/DownloadFoursquare.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="33" selection-start="644" selection-end="657" vertical-scroll-proportion="0.64412236" vertical-offset="42" max-vertical-offset="663">
+        <state line="357" column="79" selection-start="15315" selection-end="15315" vertical-scroll-proportion="0.0" vertical-offset="5060" max-vertical-offset="8806">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/layout/download_foursquare.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="940" selection-end="940" vertical-scroll-proportion="0.65604025" vertical-offset="0" max-vertical-offset="646">
+        <state line="13" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/layout/activity_movie_info.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyBootReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="58" selection-start="3864" selection-end="3864" vertical-scroll-proportion="0.21140939" vertical-offset="1438" max-vertical-offset="3706">
+        <state line="9" column="0" selection-start="226" selection-end="226" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MyAlarmService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="34" selection-start="271" selection-end="271" vertical-scroll-proportion="0.14261745" vertical-offset="0" max-vertical-offset="596">
+        <state line="78" column="0" selection-start="2439" selection-end="2439" vertical-scroll-proportion="0.0" vertical-offset="1037" max-vertical-offset="1581">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/sdk/sources/android-18/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2659" column="19" selection-start="113797" selection-end="113797" vertical-scroll-proportion="0.33272058" vertical-offset="43611" max-vertical-offset="89301">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/layout/about_layout.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/menu/options_menu.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="13" selection-start="699" selection-end="699" vertical-scroll-proportion="-4.08" vertical-offset="204" max-vertical-offset="1071">
+        <state line="3" column="4" selection-start="110" selection-end="195" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/menu/main.xml">
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/xml/preferences.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="11" selection-start="762" selection-end="762" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/FoursquareDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="27" selection-start="1491" selection-end="1507" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2771">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/FoursquareError.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="86" selection-end="86" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/DialogError.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="7" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Foursquare.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="13" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0" vertical-offset="1771" max-vertical-offset="3128">
-          <folding />
+        <state line="10" column="47" selection-start="529" selection-end="529" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+          <folding>
+            <element signature="e#168#201#0" expanded="true" />
+            <element signature="e#368#410#0" expanded="true" />
+            <element signature="e#441#481#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="314" column="33" selection-start="11300" selection-end="11301" vertical-scroll-proportion="-7.0" vertical-offset="3708" max-vertical-offset="13617">
+        <state line="234" column="28" selection-start="8958" selection-end="8958" vertical-scroll-proportion="-11.291667" vertical-offset="3707" max-vertical-offset="15232">
           <folding>
-            <element signature="e#13572#13592#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#13838#13858#0" expanded="true" />
+            <element signature="e#13940#13975#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MapPageFragment.java">
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/menu/main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="0" selection-start="1192" selection-end="1192" vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="595">
-          <folding />
+        <state line="19" column="35" selection-start="790" selection-end="798" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
+          <folding>
+            <element signature="e#128#149#0" expanded="true" />
+            <element signature="e#824#849#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/Prefs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="45" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="52" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="544">
+        <state line="5" column="33" selection-start="172" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MovieSquare/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="44" selection-start="357" selection-end="357" vertical-scroll-proportion="0.27651516" vertical-offset="24" max-vertical-offset="1054">
-          <folding />
+        <state line="61" column="19" selection-start="3405" selection-end="3405" vertical-scroll-proportion="0.9905838" vertical-offset="511" max-vertical-offset="1411">
+          <folding>
+            <element signature="e#1077#1095#0" expanded="true" />
+            <element signature="e#1997#2026#0" expanded="true" />
+            <element signature="e#2603#2629#0" expanded="true" />
+            <element signature="e#3056#3100#0" expanded="true" />
+            <element signature="e#3500#3525#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -17,4 +17,7 @@
                         android:title="Sort by Theater" />
             </menu>
     </item>
+    <item android:id="@+id/settings"
+          android:title="@string/action_settings"
+            android:showAsAction="collapseActionView"/>
 </menu>

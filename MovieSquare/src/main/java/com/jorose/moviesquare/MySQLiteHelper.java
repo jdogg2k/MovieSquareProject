@@ -173,6 +173,74 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return movie;
     }
 
+    public Movie getMovieFromTitle(String title){
+
+        // 1. get reference to readable DB
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // 2. build query
+        Cursor cursor =
+                null; // h. limit
+        if (db != null) {
+            cursor = db.query(TABLE_MOVIES, // a. table
+                    COLUMNS, // b. column names
+                    " title = ?", // c. selections
+                    new String[] { title }, // d. selections args
+                    null, // e. group by
+                    null, // f. having
+                    null, // g. order by
+                    null);
+        }
+
+        // 3. if we got results get the first one
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // 4. build movie object
+        Movie movie = new Movie();
+        movie.setId(Integer.parseInt(cursor.getString(0)));
+        movie.setTitle(cursor.getString(1));
+        movie.setFan_id(cursor.getString(2));
+        movie.setTheater_id(cursor.getString(3));
+        movie.setRating(Float.parseFloat(cursor.getString(4)));
+        movie.setDateStr(cursor.getString(5));
+        movie.setVenue(this.getVenue(cursor.getString(3)));
+
+        // 5. return movie
+        return movie;
+    }
+
+    public Movie getMostRecentMovie(){
+
+        // 1. get reference to readable DB
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // 2. build query
+        Cursor cursor =
+                null; // h. limit
+        if (db != null) {
+            String query = "SELECT id, title, fan_id, theater_id, rating, date_str from " + TABLE_MOVIES + " ORDER BY " + KEY_ID + " DESC LIMIT 1";
+            cursor = db.rawQuery(query, null);
+        }
+
+        // 3. if we got results get the first one
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // 4. build movie object
+        Movie movie = new Movie();
+        movie.setId(Integer.parseInt(cursor.getString(0)));
+        movie.setTitle(cursor.getString(1));
+        movie.setFan_id(cursor.getString(2));
+        movie.setTheater_id(cursor.getString(3));
+        movie.setRating(Float.parseFloat(cursor.getString(4)));
+        movie.setDateStr(cursor.getString(5));
+        movie.setVenue(this.getVenue(cursor.getString(3)));
+
+        // 5. return movie
+        return movie;
+    }
+
     public Venue getVenue(String id){
 
         // 1. get reference to readable DB

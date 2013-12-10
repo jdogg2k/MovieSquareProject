@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -224,6 +227,12 @@ public class MainActivity extends FragmentActivity {
         // ActionBarDrawerToggle will take care of this.
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
+        }
+
+        if (item.getItemId() == R.id.settings)
+        {
+                startActivity(new Intent(this, Prefs.class));
+                return true;
         }
 
         if (item.getTitle().toString().contains("Sort by")){
@@ -468,9 +477,9 @@ public class MainActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case R.id.edit_movie:
                 String selMovieName = hMap.get("title").toString();
-                String selRating = hMap.get("rating").toString();
-                String selDate = hMap.get("date").toString();
-                editMovie(selMovieNumber, selMovieName, selRating, selDate);
+                //String selRating = hMap.get("rating").toString();
+                //String selDate = hMap.get("date").toString();
+                editMovie(selMovieName);
                 return true;
             case R.id.delete_movie:
                 mHelper.RemoveMovie(selMovieNumber, lv.getContext());
@@ -485,12 +494,12 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    public void editMovie(String mNum, String title, String rating, String date){
+    public void editMovie(String title){
         LinearLayout viewGroup = (LinearLayout) findViewById(R.id.popupLinearLayout);
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         editMovieLayout = layoutInflater.inflate(R.layout.edit_movie, viewGroup);
 
-        selectedMovie = db.getMovie(Integer.parseInt(mNum));
+        selectedMovie = db.getMovieFromTitle(title);
 
         int popupWidth = 800;
         int popupHeight = 900;
@@ -499,7 +508,7 @@ public class MainActivity extends FragmentActivity {
         mName.setText(title);
 
         final RatingBar mRating = (RatingBar) editMovieLayout.findViewById(R.id.editRating);
-        mRating.setRating(Float.parseFloat(rating));
+        mRating.setRating(selectedMovie.getRating());
 
         // Creating the PopupWindow
         final PopupWindow popup = new PopupWindow();

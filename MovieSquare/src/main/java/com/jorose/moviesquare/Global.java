@@ -8,6 +8,8 @@ import android.app.Application;
 public  class  Global extends Application {
     private String venueID = "";
     private String eventID = "";
+    private String checkinMovieName = "";
+    private Boolean useDelay = false;
     public String get_venue() {
         return venueID;
     }
@@ -19,5 +21,11 @@ public  class  Global extends Application {
     }
     public void set_event(String eventID) {
         this.eventID = eventID;
+    }
+    public String get_checkinMovieName() {
+        return checkinMovieName;
+    }
+    public void set_checkinMovieName(String movieName) {
+        this.checkinMovieName = movieName;
     }
 }
