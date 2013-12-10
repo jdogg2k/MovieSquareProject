@@ -3,6 +3,8 @@ package com.jorose.moviesquare;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class MyBootReceiver extends BroadcastReceiver
 {
@@ -11,18 +13,21 @@ public class MyBootReceiver extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        Global global = ((Global)context.getApplicationContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Boolean notificationsSet = prefs.getBoolean("pref_key_notifications", true);
+        if (notificationsSet){
+            Global global = ((Global)context.getApplicationContext());
 
-        db = new MySQLiteHelper(context);
+            db = new MySQLiteHelper(context);
 
 
-        Movie m = db.getMostRecentMovie();
-        if (m.getRating() == 0.0){ //check if latest movie is rated
-            global.set_checkinMovieName(m.getTitle());
-            Intent service1 = new Intent(context, MyAlarmService.class);
-            context.startService(service1);
+            Movie m = db.getMostRecentMovie();
+            if (m.getRating() == 0.0){ //check if latest movie is rated
+                global.set_checkinMovieName(m.getTitle());
+                Intent service1 = new Intent(context, MyAlarmService.class);
+                context.startService(service1);
+            }
+
         }
-
-
     }
 }

@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -371,23 +373,30 @@ public class MovieShowings extends Activity {
                                             //SAVE MOVIE TO DB
                                             mHelper.SaveMovie(selMovieName, selMovieFanID, selVenue, thisRating, v.getContext());
 
+
                                             //set notification to show after movie is over
                                             global.set_checkinMovieName(selMovieName);
-                                            //set date
 
-                                            Calendar calendar = Calendar.getInstance();
+                                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                            Boolean notificationsSet = prefs.getBoolean("pref_key_notifications", true);
+                                            if (notificationsSet){
 
-                                            Calendar newTime = (Calendar) calendar.clone();
-                                            //newTime.add(Calendar.HOUR_OF_DAY, 2);
-                                            newTime.add(Calendar.MINUTE, 2);
-                                            //todo set time, clear notification, etc..
+                                                //set date
 
-                                            Intent myIntent = new Intent(v.getContext(), MyReceiver.class);
-                                            pendingIntent = PendingIntent.getBroadcast(v.getContext(), 0, myIntent,0);
+                                                Calendar calendar = Calendar.getInstance();
 
-                                            AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-                                            alarmManager.set(AlarmManager.RTC, newTime.getTimeInMillis(), pendingIntent);
+                                                Calendar newTime = (Calendar) calendar.clone();
+                                                //newTime.add(Calendar.HOUR_OF_DAY, 2);
+                                                newTime.add(Calendar.MINUTE, 2);
+                                                //todo set time, clear notification, etc..
 
+                                                Intent myIntent = new Intent(v.getContext(), MyReceiver.class);
+                                                pendingIntent = PendingIntent.getBroadcast(v.getContext(), 0, myIntent,0);
+
+                                                AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                                                alarmManager.set(AlarmManager.RTC, newTime.getTimeInMillis(), pendingIntent);
+
+                                            }
 
                                             for(int i = 0 ; i < notifications.length(); i++){
                                                JSONObject jo = notifications.getJSONObject(i);
