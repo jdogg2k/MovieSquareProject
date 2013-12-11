@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
@@ -41,9 +42,14 @@ public class MyAlarmService extends Service
         Global global = ((Global)getApplicationContext());
 
         String mName = global.get_checkinMovieName();
+        String mID = global.get_checkinMovieID();
 
         Intent intent1 = new Intent(this.getApplicationContext(),EditMovie.class);
-        intent1.putExtra("mName", mName);
+        Bundle extras = new Bundle();
+        extras.putString("mName",mName);
+        extras.putString("mID",mID);
+        intent1.putExtras(extras);
+
 
 
         PendingIntent pendingNotificationIntent = PendingIntent.getActivity( this.getApplicationContext(),0, intent1,PendingIntent.FLAG_UPDATE_CURRENT);

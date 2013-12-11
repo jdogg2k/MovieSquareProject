@@ -81,7 +81,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public void addMovie(Movie movie){
+    public String addMovie(Movie movie){
         //for logging
         Log.d("addMovie", movie.toString());
 
@@ -103,8 +103,23 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                     values); // key/value -> keys = column names/ values = column values
         }
 
+        // 2. build query
+        Cursor cursor =
+                null; // h. limit
+        if (db != null) {
+            String query = "SELECT id from " + TABLE_MOVIES + " ORDER BY " + KEY_ID + " DESC LIMIT 1";
+            cursor = db.rawQuery(query, null);
+        }
+
+        // 3. if we got results get the first one
+        if (cursor != null)
+            cursor.moveToFirst();
+        String movieID = cursor.getString(0);
+
         // 4. close
         db.close();
+
+        return movieID;
     }
 
     public void addVenue(Venue venue){

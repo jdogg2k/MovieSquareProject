@@ -9,6 +9,7 @@ public  class  Global extends Application {
     private String venueID = "";
     private String eventID = "";
     private String checkinMovieName = "";
+    private String checkinMovieID = "0";
     private Boolean useDelay = false;
     public String get_venue() {
         return venueID;
@@ -27,5 +28,11 @@ public  class  Global extends Application {
     }
     public void set_checkinMovieName(String movieName) {
         this.checkinMovieName = movieName;
+    }
+    public String get_checkinMovieID() {
+        return checkinMovieID;
+    }
+    public void set_checkinMovieID(String mID) {
+        this.checkinMovieID = mID;
     }
 }

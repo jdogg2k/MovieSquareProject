@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -263,10 +264,7 @@ public class MovieShowings extends Activity {
                             LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                             movieInfoLayout = layoutInflater.inflate(R.layout.activity_movie_info, viewGroup);
 
-                            int popupWidth = 800;
-                            int popupHeight = 1200;
-
-                            //todo make dimensions relative
+                            int popupDimensions = WindowManager.LayoutParams.MATCH_PARENT;
 
                             new FandangoPosterTask().execute(movieID);
 
@@ -280,8 +278,10 @@ public class MovieShowings extends Activity {
                             // Creating the PopupWindow
                             final PopupWindow popup = new PopupWindow();
                             popup.setContentView(movieInfoLayout);
-                            popup.setWidth(popupWidth);
-                            popup.setHeight(popupHeight);
+                            popup.setWidth(popupDimensions);
+                            popup.setHeight(popupDimensions);
+                            //popup.setWidth(popupWidth);
+                            //popup.setHeight(popupHeight);
                             popup.setFocusable(true);
                             popup.setAnimationStyle(R.style.PopupWindowAnimation);
 
@@ -371,11 +371,12 @@ public class MovieShowings extends Activity {
                                             mHelper.SaveVenue(selVenue, selVenueName, Float.valueOf(selVenueLat), Float.valueOf(selVenueLng), v.getContext());
 
                                             //SAVE MOVIE TO DB
-                                            mHelper.SaveMovie(selMovieName, selMovieFanID, selVenue, thisRating, v.getContext());
+                                            String newMovieID = mHelper.SaveMovie(selMovieName, selMovieFanID, selVenue, thisRating, v.getContext());
 
 
                                             //set notification to show after movie is over
                                             global.set_checkinMovieName(selMovieName);
+                                            global.set_checkinMovieID(newMovieID);
 
                                             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                             Boolean notificationsSet = prefs.getBoolean("pref_key_notifications", true);
@@ -386,9 +387,8 @@ public class MovieShowings extends Activity {
                                                 Calendar calendar = Calendar.getInstance();
 
                                                 Calendar newTime = (Calendar) calendar.clone();
-                                                //newTime.add(Calendar.HOUR_OF_DAY, 2);
-                                                newTime.add(Calendar.MINUTE, 2);
-                                                //todo set time, clear notification, etc..
+                                                newTime.add(Calendar.HOUR_OF_DAY, 2); // allow for two hour span to allow movie to be over
+                                                //newTime.add(Calendar.MINUTE, 2); //for debug
 
                                                 Intent myIntent = new Intent(v.getContext(), MyReceiver.class);
                                                 pendingIntent = PendingIntent.getBroadcast(v.getContext(), 0, myIntent,0);

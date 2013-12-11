@@ -24,6 +24,7 @@ public class MyBootReceiver extends BroadcastReceiver
             Movie m = db.getMostRecentMovie();
             if (m.getRating() == 0.0){ //check if latest movie is rated
                 global.set_checkinMovieName(m.getTitle());
+                global.set_checkinMovieID(Integer.toString(m.getId()));
                 Intent service1 = new Intent(context, MyAlarmService.class);
                 context.startService(service1);
             }

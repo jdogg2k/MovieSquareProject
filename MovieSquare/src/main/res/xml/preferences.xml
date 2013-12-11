@@ -8,6 +8,6 @@
                 android:key="pref_key_notifications"
                 android:summary="@string/pref_notification_toggle_summary"
                 android:title="@string/pref_notification_toggle_title"
-                android:defaultValue="false" />
+                android:defaultValue="true" />
     </PreferenceCategory>
 </PreferenceScreen>

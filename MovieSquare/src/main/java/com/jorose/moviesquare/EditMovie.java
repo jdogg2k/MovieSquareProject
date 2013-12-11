@@ -36,14 +36,16 @@ public class EditMovie extends Activity {
 
         db = new MySQLiteHelper(getApplicationContext());
 
-        String m = getIntent().getStringExtra("mName");
+        Bundle extras = intent.getExtras();
+        String mTitle = extras.getString("mName");
+        int mID = Integer.parseInt(extras.getString("mID"));
 
-        editMovie(m);
+        editMovie(mID, mTitle);
     }
 
-    public void editMovie(String title){
+    public void editMovie(int mID, String title){
 
-        selectedMovie = db.getMovieFromTitle(title);
+        selectedMovie = db.getMovie(mID);
 
         TextView mName = (TextView) findViewById(R.id.editMyMovieName);
         mName.setText(title);

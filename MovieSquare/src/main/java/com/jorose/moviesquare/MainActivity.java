@@ -36,6 +36,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -479,7 +480,7 @@ public class MainActivity extends FragmentActivity {
                 String selMovieName = hMap.get("title").toString();
                 //String selRating = hMap.get("rating").toString();
                 //String selDate = hMap.get("date").toString();
-                editMovie(selMovieName);
+                editMovie(Integer.parseInt(selMovieNumber), selMovieName);
                 return true;
             case R.id.delete_movie:
                 mHelper.RemoveMovie(selMovieNumber, lv.getContext());
@@ -494,18 +495,17 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    public void editMovie(String title){
+    public void editMovie(int mID, String mTitle){
         LinearLayout viewGroup = (LinearLayout) findViewById(R.id.popupLinearLayout);
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         editMovieLayout = layoutInflater.inflate(R.layout.edit_movie, viewGroup);
 
-        selectedMovie = db.getMovieFromTitle(title);
+        selectedMovie = db.getMovie(mID);
 
-        int popupWidth = 800;
-        int popupHeight = 900;
+        int popupDimensions = WindowManager.LayoutParams.MATCH_PARENT;
 
         TextView mName = (TextView) editMovieLayout.findViewById(R.id.editMovieName);
-        mName.setText(title);
+        mName.setText(mTitle);
 
         final RatingBar mRating = (RatingBar) editMovieLayout.findViewById(R.id.editRating);
         mRating.setRating(selectedMovie.getRating());
@@ -513,8 +513,8 @@ public class MainActivity extends FragmentActivity {
         // Creating the PopupWindow
         final PopupWindow popup = new PopupWindow();
         popup.setContentView(editMovieLayout);
-        popup.setWidth(popupWidth);
-        popup.setHeight(popupHeight);
+        popup.setWidth(popupDimensions);
+        popup.setHeight(popupDimensions);
         popup.setFocusable(true);
         //popup.setAnimationStyle(R.style.PopupWindowAnimation);
 

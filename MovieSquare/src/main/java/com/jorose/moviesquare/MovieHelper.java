@@ -9,7 +9,7 @@ import java.util.Calendar;
  * Created by jrose on 11/8/13.
  */
 public class MovieHelper {
-    public void SaveMovie(String title, String fID, String tID, float rating, Context c){
+    public String SaveMovie(String title, String fID, String tID, float rating, Context c){
         MySQLiteHelper db = new MySQLiteHelper(c);
 
         //Movie badMovie = db.getMovie(5);
@@ -19,9 +19,9 @@ public class MovieHelper {
         Calendar cal = Calendar.getInstance();
         thisDate = cal.getTime().toString();
 
-        db.addMovie(new Movie(title, fID, tID, rating, thisDate, null));
+        String newID = db.addMovie(new Movie(title, fID, tID, rating, thisDate, null));
 
-        //db.getAllMovies();
+        return newID;
     }
 
     public void RemoveMovie(String mID, Context c){
