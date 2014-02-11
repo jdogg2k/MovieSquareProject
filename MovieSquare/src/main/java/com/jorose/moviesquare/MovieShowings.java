@@ -317,10 +317,14 @@ public class MovieShowings extends Activity {
 
                                 @Override
                                 public void onClick(View v) {
+                                    DateFormat dateFormat = new SimpleDateFormat("yyyymmdd");
+                                    //get current date time with Date()
+                                    Date thisdate = new Date();
+                                    String currentDateandTime = dateFormat.format(thisdate).toString();
                                     String auth_token = ExampleTokenStore.get().getToken();
                                     // Create a new HttpClient and Post Header
                                     HttpClient httpclient = new DefaultHttpClient();
-                                    HttpPost httppost = new HttpPost("https://api.foursquare.com/v2/checkins/add");
+                                    HttpPost httppost = new HttpPost("https://api.foursquare.com/v2/checkins/add?v=" + currentDateandTime);
 
                                     try {
 
