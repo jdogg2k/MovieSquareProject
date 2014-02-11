@@ -15,8 +15,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f006cf84-06c8-4c6a-9a25-9bd92b0b38bd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/MovieSquare/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MovieShowings.java" afterPath="$PROJECT_DIR$/MovieSquare/src/main/java/com/jorose/moviesquare/MovieShowings.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MovieSquareProject.iws" />
@@ -708,7 +706,7 @@
       <workItem from="1386717352665" duration="1136000" />
       <workItem from="1386861138031" duration="8231000" />
       <workItem from="1392132932711" duration="2374000" />
-      <workItem from="1392140679438" duration="1807000" />
+      <workItem from="1392140679438" duration="1814000" />
     </task>
     <task id="LOCAL-00001" summary="Added some improvements">
       <created>1376685501272</created>
@@ -782,11 +780,15 @@
       <created>1392135244329</created>
       <updated>1392135244329</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Fixed Foursquare API issue">
+      <created>1392160488234</created>
+      <updated>1392160488234</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="229896000" />
+    <option name="totallyTimeSpent" value="229903000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
