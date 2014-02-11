@@ -67,8 +67,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -130,7 +133,12 @@ public class MovieShowings extends Activity {
             HttpConnectionParams.setConnectionTimeout(httpParams, 30000);
             HttpConnectionParams.setSoTimeout(httpParams, 30000);
 
-            HttpGet httppost = new HttpGet("https://api.foursquare.com/v2/venues/" + selVenue + "/events?client_id=" + MainActivity.CLIENT_ID +"&client_secret=" + MainActivity.CLIENT_SECRET); //
+            DateFormat dateFormat = new SimpleDateFormat("yyyymmdd");
+            //get current date time with Date()
+            Date thisdate = new Date();
+            String currentDateandTime = dateFormat.format(thisdate).toString();
+
+            HttpGet httppost = new HttpGet("https://api.foursquare.com/v2/venues/" + selVenue + "/events?client_id=" + MainActivity.CLIENT_ID +"&client_secret=" + MainActivity.CLIENT_SECRET + "&v=" + currentDateandTime); //
 
             try{
 

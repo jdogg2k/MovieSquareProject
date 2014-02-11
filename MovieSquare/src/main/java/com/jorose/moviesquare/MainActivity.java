@@ -577,7 +577,6 @@ public class MainActivity extends FragmentActivity {
 
     private class GetChildList extends AsyncTask<String, Void, String>{
 
-        private String currentDateandTime = "20130715";  //yyyymmdd
 
         @Override
         protected String doInBackground(String... params) {
@@ -585,6 +584,12 @@ public class MainActivity extends FragmentActivity {
 
             //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             //Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyymmdd");
+            //get current date time with Date()
+            Date thisdate = new Date();
+            String currentDateandTime = dateFormat.format(thisdate).toString();
+
             double[] latlong = getGPS();
             curLat = latlong[0];
             curLong = latlong[1];
