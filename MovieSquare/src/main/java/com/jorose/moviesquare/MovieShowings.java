@@ -60,6 +60,7 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -74,6 +75,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.net.URLEncoder;
 
 import com.jorose.moviesquare.MovieHelper;
 
@@ -261,10 +263,16 @@ public class MovieShowings extends Activity {
 
                         global.set_event(eventID);
 
-                        int mPos = movieURL.indexOf("movie=") + 6;
-                        int mEnd = movieURL.indexOf("&wired=");
-                        String movieID = movieURL.substring(mPos, mEnd);
-                        selMovieFanID = movieID;
+                        String movieID = "none";
+                        if (!movieURL.equals("none")) {
+                            int mPos = movieURL.indexOf("movie=") + 6;
+                            int mEnd = movieURL.indexOf("&wired=");
+                            movieID = movieURL.substring(mPos, mEnd);
+                            selMovieFanID = movieID;
+                        } else {
+                            selMovieFanID = eventID;
+                            movieID = "none|" + movieName;
+                        }
 
                         try{ //use fandango to get poster Image
 
@@ -486,29 +494,52 @@ public class MovieShowings extends Activity {
                 protected Bitmap doInBackground(String...paths) {
 
                     String movieID = paths[0];
+                    String movieName = "";
+
                     Document doc = null;
                     try {
-                        doc = Jsoup.connect("http://www.fandango.com/movies/1/movieoverview.aspx?mid=" + movieID).get();
+                        if (movieID.indexOf("none|") > -1)
+                        {
+                            String [] movieInfo = movieID.split("|");
+                            movieName = movieInfo[1].toString();
+                            doc = Jsoup.connect("http://www.fandango.com/search/?q=" + URLEncoder.encode(movieName, "UTF-8")).get();
+                        } else {
+                            doc = Jsoup.connect("http://www.fandango.com/movies/1/movieoverview.aspx?mid=" + movieID).get();
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                    Element posterElement = doc.getElementById("POSTER_LINK");
-
+                    Element posterElement = null;
                     Bitmap bmp = null;
 
-                    if (posterElement != null){
-                        String allSource = doc.html();
-                        int topH = allSource.indexOf("<h1");
-                        String subSource = allSource.substring(topH);
-                        int topSpan = subSource.indexOf("<span") + 1;
-                        String spanSource = subSource.substring(topSpan);
-                        int markStart = spanSource.indexOf(">") + 1;
-                        int markEnd = spanSource.indexOf("<");
-                        selMovieInfo = spanSource.substring(markStart, markEnd);
+                    if (movieID.indexOf("none|") > -1) {
+                        posterElement = doc.getElementById("movies");
+                    } else {
+                        posterElement = doc.getElementById("POSTER_LINK");
+                    }
 
-                        Element posterImage = posterElement.children().first();
-                        String imageURL = posterImage.attr("src");
+                    if (posterElement != null){
+                        String imageURL;
+                        Element posterImage;
+                        String allSource = doc.html();
+
+                        if (movieID.indexOf("none|") > -1) {
+                            Elements imgs = posterElement.getElementsByTag("img");
+                            posterImage = imgs.first();
+                            selMovieInfo = movieName;
+                        } else {
+                            int topH = allSource.indexOf("<h1");
+                            String subSource = allSource.substring(topH);
+                            int topSpan = subSource.indexOf("<span") + 1;
+                            String spanSource = subSource.substring(topSpan);
+                            int markStart = spanSource.indexOf(">") + 1;
+                            int markEnd = spanSource.indexOf("<");
+                            selMovieInfo = spanSource.substring(markStart, markEnd);
+                            posterImage = posterElement.children().first();
+                        }
+
+                        imageURL = posterImage.attr("src");
 
                         URL url;
                         try {

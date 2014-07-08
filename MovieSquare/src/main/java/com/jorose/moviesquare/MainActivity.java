@@ -596,7 +596,9 @@ public class MainActivity extends FragmentActivity {
 
             String latLong = Double.toString(curLat) + "," + Double.toString(curLong);
 
-            DefaultHttpClient httpclient = new DefaultHttpClient();
+            //String latLong = "38.918685,-77.019653";
+
+                    DefaultHttpClient httpclient = new DefaultHttpClient();
             final HttpParams httpParams = httpclient.getParams();
             HttpConnectionParams.setConnectionTimeout(httpParams, 30000);
             HttpConnectionParams.setSoTimeout(httpParams, 30000);

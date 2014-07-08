@@ -54,13 +54,14 @@ public class MovieListJSONParser {
         String movieURL;
 
         try {
+            movieURL = "none";
             movieID = jVenue.getString("id");
             movieName = jVenue.getString("name");
-            movieURL = jVenue.getString("url");
-
-
             movie.put("name", movieName);
             movie.put("id", movieID);
+            if (jVenue.has("url")) {
+                movieURL = jVenue.getString("url");
+            }
             movie.put("url", movieURL);
 
         } catch (JSONException e) {
